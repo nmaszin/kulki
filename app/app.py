@@ -28,6 +28,9 @@ class App:
     while self.running:
       for event in pygame.event.get():
         self.handle_event(event)
+    
+    print('Najkrótsza droga przebyta przez jedną kulkę:', min(map(lambda ball: ball.track_length, self.simulation.balls)))
+    print('Najdłuższa droga przebyta przez jedną kulkę:', max(map(lambda ball: ball.track_length, self.simulation.balls)))
 
   def handle_event(self, event):
     if event.type == pygame.QUIT:

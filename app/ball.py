@@ -9,6 +9,8 @@ class Ball:
     self.position = position
     self.radius = radius
     self.velocity = velocity
+
+    self.track_length = 0
   
   def __eq__(self, other):
     return self.position == other.position and self.velocity == other.velocity and self.radius == other.radius
@@ -96,6 +98,7 @@ class Ball:
     Does not return anything
     """
     displacement = self.velocity * time_delta
+    self.track_length += abs(displacement)
     self.position = self.position.translate(displacement)
 
 class DrawableBall(Ball):
