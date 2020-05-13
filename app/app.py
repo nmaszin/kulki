@@ -1,8 +1,5 @@
 import pygame
-from app.point import Point
-from app.rectangle import Rectangle
-from app.vector import Vector
-from app.ball import DrawableBall
+from app.simulation import Simulation
 
 class App:
   WINDOW_TITLE = 'Kulki by N-Maszin'
@@ -19,18 +16,12 @@ class App:
     self.surface = pygame.display.set_mode((self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
     self.surface.fill(self.WINDOW_BACKGROUND)
 
-    self.balls = []
-    for y in range(10):
-      for x in range(10):
-        self.balls.append(DrawableBall(Point(110 + 60 * x, 110 + 60 * y), 10, Vector(200, 200)))
-    
-    for ball in self.balls:
-      ball.draw(self.surface)
-
-    self.UPDATE_WORLD = pygame.USEREVENT
-    pygame.time.set_timer(self.UPDATE_WORLD, int(1000 / self.FPS))
-
+    self.simulation = Simulation(64, self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 5)
+    self.simulation.draw(self.surface)
     pygame.display.update()
+
+    self.UPDATE_SIMULATION = pygame.USEREVENT
+    pygame.time.set_timer(self.UPDATE_SIMULATION, int(1000 / self.FPS))
 
   def run(self):
     self.running = True
@@ -41,33 +32,12 @@ class App:
   def handle_event(self, event):
     if event.type == pygame.QUIT:
       self.running = False
-    elif event.type == self.UPDATE_WORLD:
-      scene = Rectangle(100, 100, self.WINDOW_WIDTH - 200, self.WINDOW_HEIGHT - 200)
-
-      delta_time = 1 / self.FPS
-
-      for ball in self.balls:
-        ball.update(delta_time)
-
-      for index in range(len(self.balls)):
-        ball = self.balls[index]
-        for other in self.balls[index + 1:]:
-          if ball.is_collision_with_ball(other):
-            ball.bounce_off_of_ball(other)
-      
-      for ball in self.balls:
-        if ball.is_collision_with_wall(scene):
-          ball.bounce_off_of_wall(scene)
+    elif event.type == pygame.KEYDOWN:
+      if event.key == pygame.K_ESCAPE:
+        self.running = False
+    elif event.type == self.UPDATE_SIMULATION:
+      self.simulation.update(1 / self.FPS)
       
       self.surface.fill(self.WINDOW_BACKGROUND)
-      for index in range(len(self.balls)):
-        ball = self.balls[index]
-        if index == 3:
-          ball.draw(self.surface, color=(0, 240, 0))
-        else:
-          ball.draw(self.surface)
-
+      self.simulation.draw(self.surface)
       pygame.display.update()
-
-app = App()
-app.run()

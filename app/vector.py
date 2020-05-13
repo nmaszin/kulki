@@ -5,6 +5,13 @@ class Vector:
     self.x = x
     self.y = y
 
+  @staticmethod
+  def from_polar(r, phi):
+    return Vector(
+      r * math.cos(phi),
+      r * math.sin(phi)
+    )
+
   def __repr__(self):
     return f'[{self.x}, {self.y}]'
 

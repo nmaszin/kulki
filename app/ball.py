@@ -59,16 +59,22 @@ class Ball:
     Does not return anything
     """
     possible_centers = self.ball_possible_centers(scene)
+    epsilon = 1
 
     if self.position.x < possible_centers.left():
       self.velocity.x *= -1
+      self.position.x = self.radius + epsilon
     elif self.position.x > possible_centers.right():
       self.velocity.x *= -1
+      self.position.x = possible_centers.right() - self.radius - epsilon
     
     if self.position.y < possible_centers.top():
       self.velocity.y *= -1
+      self.position.y = self.radius + epsilon
+
     elif self.position.y > possible_centers.bottom():
       self.velocity.y *= -1
+      self.position.y = possible_centers.bottom() - self.radius - epsilon
 
 
   def ball_possible_centers(self, scene):
@@ -93,13 +99,16 @@ class Ball:
     self.position = self.position.translate(displacement)
 
 class DrawableBall(Ball):
-  COLOR = (240, 0, 0)
-  def draw(self, surface, color=None):
-    color = self.COLOR if color is None else color
+  DEFAULT_COLOR = (240, 0, 0)
 
+  def __init__(self, position, radius, velocity, color=DEFAULT_COLOR):
+    super().__init__(position, radius, velocity)
+    self.color = color
+
+  def draw(self, surface):
     pygame.draw.circle(
       surface,
-      color,
+      self.color,
       tuple(self.position.coords_int()),
       self.radius
     )
