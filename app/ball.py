@@ -6,10 +6,11 @@ from app.rectangle import Rectangle
 from app.matrix import TransformationMatrix
 
 class Ball:
-  def __init__(self, position, radius, velocity):
+  def __init__(self, position, radius, velocity, acceleration=Vector(0, 0)):
     self.position = position
     self.radius = radius
     self.velocity = velocity
+    self.acceleration = acceleration
 
     self.track_length = 0
   
@@ -92,6 +93,9 @@ class Ball:
     Updates position of the ball after time_delta seconds
     Does not return anything
     """
+    velocity_displacement = self.acceleration * time_delta
+    self.velocity += velocity_displacement
+
     displacement = self.velocity * time_delta
     self.track_length += abs(displacement)
     self.position = self.position.translate(displacement)

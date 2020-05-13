@@ -1,4 +1,5 @@
 import math
+import copy
 import random
 from app.point import Point
 from app.vector import Vector
@@ -34,8 +35,9 @@ class Simulation:
         random_color()
       ))
     
-    self.balls[0].velocity = Vector.from_polar(600, math.radians(30))
-  
+    self.balls[0].velocity = Vector.from_polar(600, math.radians(0))
+    self.balls[0].acceleration = Vector.from_polar(1200, math.radians(90))
+
   def update(self, delta_time):
     for ball in self.balls:
       ball.update(delta_time)
