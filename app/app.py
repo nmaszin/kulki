@@ -16,7 +16,7 @@ class App:
     self.surface = pygame.display.set_mode((self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
     self.surface.fill(self.WINDOW_BACKGROUND)
 
-    self.simulation = Simulation(64, self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 5)
+    self.simulation = Simulation(64, self.WINDOW_WIDTH, self.WINDOW_HEIGHT, 15)
     self.simulation.draw(self.surface)
     pygame.display.update()
 

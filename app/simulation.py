@@ -34,7 +34,7 @@ class Simulation:
         random_color()
       ))
     
-    self.balls[0].velocity = Vector.from_polar(1000, math.radians(30))
+    self.balls[0].velocity = Vector.from_polar(600, math.radians(30))
   
   def update(self, delta_time):
     for ball in self.balls:

@@ -1,4 +1,5 @@
 import pygame
+import pygame.gfxdraw
 from app.point import Point
 from app.vector import Vector
 from app.rectangle import Rectangle
@@ -20,7 +21,7 @@ class Ball:
     Returns True if collision between two balls has ocurred
     """
     distance = self.position.distance(ball.position)
-    return distance <= self.radius + ball.radius
+    return distance <= self.radius + ball.radius + 1
   
   def is_collision_with_wall(self, scene):
     """
@@ -61,22 +62,16 @@ class Ball:
     Does not return anything
     """
     possible_centers = self.ball_possible_centers(scene)
-    epsilon = 1
 
     if self.position.x < possible_centers.left():
       self.velocity.x *= -1
-      self.position.x = self.radius + epsilon
     elif self.position.x > possible_centers.right():
       self.velocity.x *= -1
-      self.position.x = possible_centers.right() - self.radius - epsilon
     
     if self.position.y < possible_centers.top():
       self.velocity.y *= -1
-      self.position.y = self.radius + epsilon
-
     elif self.position.y > possible_centers.bottom():
       self.velocity.y *= -1
-      self.position.y = possible_centers.bottom() - self.radius - epsilon
 
 
   def ball_possible_centers(self, scene):
@@ -86,10 +81,10 @@ class Ball:
     which ball is able to have
     """
     return Rectangle(
-      x=scene.x + self.radius,
-      y=scene.y + self.radius,
-      width=scene.width - 2 * self.radius,
-      height=scene.height - 2 * self.radius,
+      x=scene.x + self.radius + 1,
+      y=scene.y + self.radius + 1,
+      width=scene.width - 2 * self.radius - 2,
+      height=scene.height - 2 * self.radius - 2,
     )
 
   def update(self, time_delta):
@@ -109,9 +104,15 @@ class DrawableBall(Ball):
     self.color = color
 
   def draw(self, surface):
-    pygame.draw.circle(
+    pygame.gfxdraw.aacircle(
       surface,
-      self.color,
-      tuple(self.position.coords_int()),
-      self.radius
+      *tuple(self.position.coords_int()),
+      self.radius,
+      self.color
+    )
+    pygame.gfxdraw.filled_circle(
+      surface,
+      *tuple(self.position.coords_int()),
+      self.radius,
+      self.color
     )
