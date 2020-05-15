@@ -6,7 +6,7 @@ from app.rectangle import Rectangle
 from app.matrix import TransformationMatrix
 
 class Ball:
-  def __init__(self, position, radius, velocity, acceleration=Vector(0, 0)):
+  def __init__(self, position, radius, velocity, acceleration):
     self.position = position
     self.radius = radius
     self.velocity = velocity
@@ -101,10 +101,8 @@ class Ball:
     self.position = self.position.translate(displacement)
 
 class DrawableBall(Ball):
-  DEFAULT_COLOR = (240, 0, 0)
-
-  def __init__(self, position, radius, velocity, color=DEFAULT_COLOR):
-    super().__init__(position, radius, velocity)
+  def __init__(self, position, radius, velocity, acceleration, color):
+    super().__init__(position, radius, velocity, acceleration)
     self.color = color
 
   def draw(self, surface):

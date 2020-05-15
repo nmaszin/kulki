@@ -1,57 +1,63 @@
 import math
-import copy
-import random
+from collections import deque
+
 from app.point import Point
 from app.vector import Vector
-from app.rectangle import Rectangle
 from app.ball import DrawableBall
+from app.color import Color
+from app.frame import SimulationFrame
 
-def random_color():
-  r = random.randint(20, 240)
-  g = random.randint(20, 240)
-  b = random.randint(20, 240)
-  return (r, g, b)
+class SimulationConfig:
+  DEFAULTS = {
+    'simulation_fps': 1000,
+    'balls_number': 100,
+    'ball_radius': 10,
+    'ball_velocity': Vector.from_polar(100, math.radians(30)),
+    'ball_acceleration': Vector(0, 0)
+  }
+
+  def __init__(self, config):
+    self.config = config
+  
+  def get(self, property):
+    if property in self.config:
+      return self.config[property]
+    
+    if property in self.DEFAULTS:
+      return self.DEFAULTS[property]
+  
+  def set(self, property, value):
+    self.config[property] = value
+
 
 class Simulation:
-  def __init__(self, balls_number, width, height, radius):
-    self.balls_number = balls_number
-    self.width = width
-    self.height = height
-    self.radius = radius
+  def __init__(self, scene, config):
+    self.scene = scene
+    self.config = config
 
-    self.scene = Rectangle(0, 0, width, height)
-
-    n = int(math.sqrt(balls_number))
-
-    self.balls = []
-    for index in range(balls_number):
-      y = int(index / n)
-      x = index % n
-
-      self.balls.append(DrawableBall(
-        Point(radius * 2 + x * (width / n), radius * 2 + y * (height / n)),
-        radius,
-        Vector(0, 0),
-        random_color()
+    balls = []
+    for _ in range(config.get('balls_number')):
+      balls.append(DrawableBall(
+        position=Point(200, 200),
+        radius=config.get('ball_radius'),
+        velocity=config.get('ball_velocity'),
+        acceleration=config.get('ball_acceleration'),
+        color=Color.BALL
       ))
     
-    self.balls[0].velocity = Vector.from_polar(600, math.radians(0))
-    self.balls[0].acceleration = Vector.from_polar(1200, math.radians(90))
+    self.frames = deque([SimulationFrame(
+      self.scene,
+      balls
+    )])
 
-  def update(self, delta_time):
-    for ball in self.balls:
-      ball.update(delta_time)
-    
-    for ballIndex, ball in enumerate(self.balls):
-      for other in self.balls[ballIndex + 1:]:
-        if ball.is_collision_with_ball(other):
-          ball.bounce_off_of_ball(other)
-    
-    for ball in self.balls:
-      if ball.is_collision_with_wall(self.scene):
-        ball.bounce_off_of_wall(self.scene)
-      
+  def generate_next_frame(self):
+    delta_time = 1 / self.config.get('simulation_fps')
+    last_frame = self.frames[-1]
+    self.frames.append(last_frame.after(delta_time))
+  
+  def any_frames_left(self):
+    return len(self.frames) != 0
 
-  def draw(self, surface):
-    for ball in self.balls:
-      ball.draw(surface)
+  def draw_next_frame(self, surface):
+    frame = self.frames.popleft()
+    frame.draw(surface)
