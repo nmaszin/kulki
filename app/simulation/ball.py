@@ -1,5 +1,6 @@
 import pygame
 import pygame.gfxdraw
+from collections import deque
 
 from app.math.point import Point
 from app.math.vector import Vector
@@ -127,14 +128,19 @@ class DrawableBall(Ball):
     )
 
 class TrackedBall(DrawableBall):
+  TRACK_SIZE = 100
+
   def __init__(self, position, radius, velocity, acceleration, color, track_color):
     super().__init__(position, radius, velocity, acceleration, color)
     self.track_color = track_color
-    self.previous_positions = []
+    self.previous_positions = deque([])
   
   def update(self, time_delta):
     self.previous_positions.append(self.position)
     super().update(time_delta)
+
+    if len(self.previous_positions) > self.TRACK_SIZE:
+      self.previous_positions.popleft()
 
   def draw(self, surface):
     for position in self.previous_positions:
