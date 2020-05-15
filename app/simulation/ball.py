@@ -29,7 +29,7 @@ class Ball:
     Returns True if collision between two balls has ocurred
     """
     distance = self.position.distance(ball.position)
-    return distance <= self.radius + ball.radius + 1
+    return distance <= self.radius + ball.radius
   
   def is_collision_with_wall(self, scene):
     """

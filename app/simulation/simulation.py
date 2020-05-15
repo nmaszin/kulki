@@ -1,7 +1,9 @@
 import math
+import random
 from collections import deque
 
 from app.math.point import Point
+from app.math.rectangle import Rectangle
 from app.math.vector import Vector
 from app.simulation.ball import DrawableBall, TrackedBall
 from app.simulation.frame import SimulationFrame
@@ -16,22 +18,28 @@ class Simulation:
     self.scene = scene
     self.config = config
 
+    positions = self.randomize_initial_balls_positions(
+      scene,
+      config.get('balls_number'),
+      config.get('ball_radius')
+    )
+    
     balls = []
     balls.append(TrackedBall(
-      position=scene.random_point(),
+      position=positions.pop(),
       radius=config.get('ball_radius'),
-      velocity=config.get('ball_velocity'),
-      acceleration=config.get('ball_acceleration'),
+      velocity=config.get('ball_velocity')(),
+      acceleration=config.get('ball_acceleration')(),
       color=Color.random(),
       track_color=Color.random()
     ))
 
-    for _ in range(config.get('balls_number') - 1):
+    for position in positions:
       balls.append(DrawableBall(
-        position=scene.random_point(),
+        position=position,
         radius=config.get('ball_radius'),
-        velocity=config.get('ball_velocity'),
-        acceleration=config.get('ball_acceleration'),
+        velocity=config.get('ball_velocity')(),
+        acceleration=config.get('ball_acceleration')(),
         color=Color.BALL
       ))
     
@@ -51,3 +59,33 @@ class Simulation:
   def draw_next_frame(self, surface):
     frame = self.frames.popleft()
     frame.draw(surface)
+  
+  @staticmethod
+  def randomize_initial_balls_positions(scene, balls_number, ball_radius):
+    rows_number = columns_number = math.ceil(math.sqrt(balls_number))
+    
+    area_width = int(scene.width / columns_number)
+    area_height = int(scene.height / rows_number)
+
+    busy_areas = [[False] * columns_number for y in range(rows_number)]
+
+    positions = []
+    for _ in range(balls_number):
+      while True:
+        x = random.randint(0, columns_number - 1)
+        y = random.randint(0, rows_number - 1)
+        if not busy_areas[y][x]:
+          busy_areas[y][x] = True
+          break
+
+      rect = Rectangle(
+        scene.x + area_width * x + ball_radius,
+        scene.y + area_height * y + ball_radius,
+        area_width - 2 * ball_radius,
+        area_height - 2 * ball_radius
+      )
+      
+      positions.append(rect.random_point())
+    
+    return positions
+

@@ -1,11 +1,11 @@
 import pygame
+import random
 
 from app.math.rectangle import Rectangle
 from app.math.vector import Vector
 from app.simulation.simulation import Simulation
 from app.simulation.config import SimulationConfig
 from app.color import Color
-
 
 class App:
   WINDOW_TITLE = 'Kulki by N-Maszin'
@@ -26,12 +26,7 @@ class App:
 
     self.simulation = Simulation(
       self.scene,
-      SimulationConfig({
-        'simulation_fps': self.FPS,
-        'balls_number': 4,
-        'ball_velocity': Vector.from_polar(500, 0),
-        'ball_acceleration': Vector(0, 2000)
-      })
+      SimulationConfig({}) # default config
     )
 
     self.RENDER_FRAME = pygame.USEREVENT
