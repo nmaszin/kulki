@@ -26,7 +26,9 @@ class App:
 
     self.simulation = Simulation(
       self.scene,
-      SimulationConfig({}) # default config
+      SimulationConfig({
+        'balls_number': 10
+      })
     )
 
     self.RENDER_FRAME = pygame.USEREVENT

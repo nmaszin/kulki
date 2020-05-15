@@ -2,7 +2,9 @@ import random
 
 class Color:
   BACKGROUND = (20, 20, 20)
-  BALL = (0, 240, 240)
+  BALL = (240, 0, 0)
+  TRACKED_BALL = (100, 100, 240)
+  TRACK = (14, 163, 54)
 
   @staticmethod
   def random():

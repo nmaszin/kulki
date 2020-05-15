@@ -30,8 +30,8 @@ class Simulation:
       radius=config.get('ball_radius'),
       velocity=config.get('ball_velocity')(),
       acceleration=config.get('ball_acceleration')(),
-      color=Color.random(),
-      track_color=Color.random()
+      color=Color.TRACKED_BALL,
+      track_color=Color.TRACK
     ))
 
     for position in positions:
