@@ -1,5 +1,5 @@
 import math
-from app.vector import Vector
+from app.math.vector import Vector
 
 class Point:
   def __init__(self, x, y):

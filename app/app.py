@@ -1,8 +1,11 @@
 import pygame
+
+from app.math.rectangle import Rectangle
+from app.math.vector import Vector
+from app.simulation.simulation import Simulation
+from app.simulation.config import SimulationConfig
 from app.color import Color
-from app.rectangle import Rectangle
-from app.simulation import Simulation, SimulationConfig
-from app.vector import Vector
+
 
 class App:
   WINDOW_TITLE = 'Kulki by N-Maszin'

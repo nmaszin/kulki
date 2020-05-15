@@ -1,4 +1,4 @@
-from app.vector import Vector
+from app.math.vector import Vector
 
 class TransformationMatrix:
   def __init__(self, unit_vector_x, unit_vector_y):

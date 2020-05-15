@@ -1,9 +1,10 @@
 import pygame
 import pygame.gfxdraw
-from app.point import Point
-from app.vector import Vector
-from app.rectangle import Rectangle
-from app.matrix import TransformationMatrix
+
+from app.math.point import Point
+from app.math.vector import Vector
+from app.math.rectangle import Rectangle
+from app.math.matrix import TransformationMatrix
 
 class Ball:
   def __init__(self, position, radius, velocity, acceleration):

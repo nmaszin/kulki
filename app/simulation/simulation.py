@@ -1,34 +1,12 @@
 import math
 from collections import deque
 
-from app.point import Point
-from app.vector import Vector
-from app.ball import DrawableBall
+from app.math.point import Point
+from app.math.vector import Vector
+from app.simulation.ball import DrawableBall
+from app.simulation.frame import SimulationFrame
+from app.simulation.config import SimulationConfig
 from app.color import Color
-from app.frame import SimulationFrame
-
-class SimulationConfig:
-  DEFAULTS = {
-    'simulation_fps': 1000,
-    'balls_number': 100,
-    'ball_radius': 10,
-    'ball_velocity': Vector.from_polar(100, math.radians(30)),
-    'ball_acceleration': Vector(0, 0)
-  }
-
-  def __init__(self, config):
-    self.config = config
-  
-  def get(self, property):
-    if property in self.config:
-      return self.config[property]
-    
-    if property in self.DEFAULTS:
-      return self.DEFAULTS[property]
-  
-  def set(self, property, value):
-    self.config[property] = value
-
 
 class Simulation:
   def __init__(self, scene, config):
