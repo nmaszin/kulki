@@ -19,6 +19,7 @@ class App:
   def __init__(self):
     pygame.init()
     pygame.display.set_caption(self.WINDOW_TITLE)
+    pygame.display.set_icon(pygame.image.load('assets/icon.png'))
     self.surface = pygame.display.set_mode((self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
     self.surface.fill(Color.BACKGROUND)
 
