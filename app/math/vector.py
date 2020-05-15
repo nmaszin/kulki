@@ -80,5 +80,8 @@ class Vector:
       )
   
   def norm(self):
+    """
+    Returns a normed vector
+    """
     scale = 1 / abs(self)
     return self * scale

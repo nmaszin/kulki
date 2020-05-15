@@ -6,6 +6,10 @@ class SimulationFrame:
     self.balls = balls
   
   def after(self, delta_time):
+    """
+    This method is responsible for generating the next frame
+    that will occur after some delta_time
+    """
     balls = copy.deepcopy(self.balls)
     
     for ball in balls:
@@ -26,5 +30,8 @@ class SimulationFrame:
     )
   
   def draw(self, surface):
+    """
+    This function draw the frame content on the surface
+    """
     for ball in self.balls:
       ball.draw(surface)

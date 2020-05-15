@@ -28,7 +28,7 @@ class App:
       self.scene,
       SimulationConfig({
         'simulation_fps': self.FPS,
-        'balls_number': 1,
+        'balls_number': 4,
         'ball_velocity': Vector.from_polar(500, 0),
         'ball_acceleration': Vector(0, 2000)
       })

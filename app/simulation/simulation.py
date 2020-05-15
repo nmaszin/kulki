@@ -3,20 +3,32 @@ from collections import deque
 
 from app.math.point import Point
 from app.math.vector import Vector
-from app.simulation.ball import DrawableBall
+from app.simulation.ball import DrawableBall, TrackedBall
 from app.simulation.frame import SimulationFrame
 from app.simulation.config import SimulationConfig
 from app.color import Color
 
 class Simulation:
+  """
+  This class is a main simulation manager
+  """
   def __init__(self, scene, config):
     self.scene = scene
     self.config = config
 
     balls = []
-    for _ in range(config.get('balls_number')):
+    balls.append(TrackedBall(
+      position=scene.random_point(),
+      radius=config.get('ball_radius'),
+      velocity=config.get('ball_velocity'),
+      acceleration=config.get('ball_acceleration'),
+      color=Color.random(),
+      track_color=Color.random()
+    ))
+
+    for _ in range(config.get('balls_number') - 1):
       balls.append(DrawableBall(
-        position=Point(200, 200),
+        position=scene.random_point(),
         radius=config.get('ball_radius'),
         velocity=config.get('ball_velocity'),
         acceleration=config.get('ball_acceleration'),

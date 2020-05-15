@@ -1,3 +1,7 @@
+import random
+
+from app.math.point import Point
+
 class Rectangle:
   def __init__(self, x, y, width, height):
     self.x = x
@@ -5,6 +9,12 @@ class Rectangle:
     self.width = width
     self.height = height
   
+  def random_point(self):
+    return Point(
+      random.randint(self.x, self.x + self.width),
+      random.randint(self.y, self.y + self.height),
+    )
+
   def contains(self, point):
     """
     Returns True if rectangle contains point

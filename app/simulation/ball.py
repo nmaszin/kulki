@@ -7,6 +7,11 @@ from app.math.rectangle import Rectangle
 from app.math.matrix import TransformationMatrix
 
 class Ball:
+  """
+  Mathematical model of ball
+  This class handle move and collisions with wall and other objects
+  """
+
   def __init__(self, position, radius, velocity, acceleration):
     self.position = position
     self.radius = radius
@@ -101,6 +106,7 @@ class Ball:
     self.track_length += abs(displacement)
     self.position = self.position.translate(displacement)
 
+
 class DrawableBall(Ball):
   def __init__(self, position, radius, velocity, acceleration, color):
     super().__init__(position, radius, velocity, acceleration)
@@ -119,3 +125,30 @@ class DrawableBall(Ball):
       self.radius,
       self.color
     )
+
+class TrackedBall(DrawableBall):
+  def __init__(self, position, radius, velocity, acceleration, color, track_color):
+    super().__init__(position, radius, velocity, acceleration, color)
+    self.track_color = track_color
+    self.previous_positions = []
+  
+  def update(self, time_delta):
+    self.previous_positions.append(self.position)
+    super().update(time_delta)
+
+  def draw(self, surface):
+    for position in self.previous_positions:
+      pygame.gfxdraw.aacircle(
+        surface,
+        *tuple(position.coords_int()),
+        2,
+        self.track_color
+      )
+      pygame.gfxdraw.filled_circle(
+        surface,
+        *tuple(position.coords_int()),
+        2,
+        self.track_color
+      )
+      
+    super().draw(surface)
