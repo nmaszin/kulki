@@ -1,6 +1,6 @@
 import pygame
 import pygame.gfxdraw
-
+#from app.simulation.simulation import Simulation
 from app.math.point import Point
 from app.math.vector import Vector
 from app.math.rectangle import Rectangle
@@ -12,13 +12,14 @@ class Ball:
   This class handle move and collisions with wall and other objects
   """
 
-  def __init__(self, position, radius, velocity, acceleration):
+  def __init__(self, position, radius, velocity, acceleration, index):
     self.position = position
     self.radius = radius
     self.velocity = velocity
     self.acceleration = acceleration
-
-    self.track_length = 0
+    self.index=index
+    self.count_collision=0
+    self.track_length = 0  
   
   def __eq__(self, other):
     return self.position == other.position and self.velocity == other.velocity and self.radius == other.radius
@@ -42,6 +43,11 @@ class Ball:
     Handle ball bouncing off of another ball
     Does not return anything
     """
+    if(self.index==0):
+      self.count_collision+=1
+      print(self.count_collision)
+        
+    
     vector_between_centers = Vector(
       ball.position.x - self.position.x,
       ball.position.y - self.position.y
@@ -70,15 +76,19 @@ class Ball:
     """
     possible_centers = self.ball_possible_centers(scene)
 
-    if self.position.x < possible_centers.left():
+    if self.position.x < possible_centers.left() and self.velocity.x<0:
       self.velocity.x *= -1
-    elif self.position.x > possible_centers.right():
+      self.position.x=possible_centers.left()
+    elif self.position.x > possible_centers.right() and self.velocity.x>0:
       self.velocity.x *= -1
+      self.position.x=possible_centers.right()
     
-    if self.position.y < possible_centers.top():
+    if self.position.y < possible_centers.top() and self.velocity.y<0:
       self.velocity.y *= -1
-    elif self.position.y > possible_centers.bottom():
+      self.position.y= possible_centers.top()
+    elif self.position.y > possible_centers.bottom() and self.velocity.y>0:
       self.velocity.y *= -1
+      self.position.y=possible_centers.bottom()
 
 
   def ball_possible_centers(self, scene):
@@ -105,11 +115,12 @@ class Ball:
     displacement = self.velocity * time_delta
     self.track_length += abs(displacement)
     self.position = self.position.translate(displacement)
+    
 
 
 class DrawableBall(Ball):
-  def __init__(self, position, radius, velocity, acceleration, color):
-    super().__init__(position, radius, velocity, acceleration)
+  def __init__(self, position, radius, velocity, acceleration, color,index,coordinates):
+    super().__init__(position, radius, velocity, acceleration,index)
     self.color = color
 
   def draw(self, surface):
@@ -127,8 +138,8 @@ class DrawableBall(Ball):
     )
 
 class TrackedBall(DrawableBall):
-  def __init__(self, position, radius, velocity, acceleration, color, track_color):
-    super().__init__(position, radius, velocity, acceleration, color)
+  def __init__(self, position, radius, velocity, acceleration, color, track_color,index,coordinates):
+    super().__init__(position, radius, velocity, acceleration, color,index,coordinates)
     self.track_color = track_color
     self.previous_positions = []
   

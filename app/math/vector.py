@@ -1,5 +1,5 @@
 import math
-
+import random
 class Vector:
   def __init__(self, x, y):
     self.x = x
@@ -7,6 +7,7 @@ class Vector:
 
   @staticmethod
   def from_polar(r, phi):
+    phi=math.radians(random.randint(0, 360))
     return Vector(
       r * math.cos(phi),
       r * math.sin(phi)

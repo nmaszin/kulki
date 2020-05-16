@@ -5,7 +5,7 @@ from app.math.vector import Vector
 class SimulationConfig:
   DEFAULTS = {
     'simulation_fps': 1000,
-    'balls_number': 100,
+    'balls_number': 10,
     'ball_radius': 10,
     'ball_velocity': Vector.from_polar(100, math.radians(30)),
     'ball_acceleration': Vector(0, 0)

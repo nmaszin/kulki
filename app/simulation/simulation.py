@@ -23,17 +23,23 @@ class Simulation:
       velocity=config.get('ball_velocity'),
       acceleration=config.get('ball_acceleration'),
       color=Color.random(),
-      track_color=Color.random()
-    ))
+      track_color=Color.random(),
+      index=0,
+      coordinates=[])
+      )
+      
+    
 
-    for _ in range(config.get('balls_number') - 1):
+    for id in range(config.get('balls_number') - 1):
       balls.append(DrawableBall(
         position=scene.random_point(),
         radius=config.get('ball_radius'),
         velocity=config.get('ball_velocity'),
         acceleration=config.get('ball_acceleration'),
-        color=Color.BALL
-      ))
+        color=Color.BALL,
+        index=id+1,
+        coordinates=[])
+        )
     
     self.frames = deque([SimulationFrame(
       self.scene,
@@ -51,3 +57,4 @@ class Simulation:
   def draw_next_frame(self, surface):
     frame = self.frames.popleft()
     frame.draw(surface)
+  
