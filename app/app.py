@@ -9,8 +9,8 @@ from app.color import Color
 
 class App:
   WINDOW_TITLE = 'Kulki by N-Maszin'
-  WINDOW_HEIGHT = 800
-  WINDOW_WIDTH = 800
+  WINDOW_HEIGHT = 600
+  WINDOW_WIDTH = 600
   FPS = 60
 
   running = False
