@@ -13,6 +13,7 @@ class App:
   WINDOW_HEIGHT = 600
   WINDOW_WIDTH = 600
   FPS = 60
+  GENERATE_FPS = 600
 
   running = False
   paused = False
@@ -41,6 +42,9 @@ class App:
     )
 
   def init_timers(self):
+    self.GENERATE_FRAME_EVENT = pygame.USEREVENT + 1
+    pygame.time.set_timer(self.GENERATE_FRAME_EVENT, int(1000 / self.GENERATE_FPS))
+
     self.RENDER_FRAME_EVENT = pygame.USEREVENT
     pygame.time.set_timer(self.RENDER_FRAME_EVENT, int(1000 / self.FPS))
 
@@ -59,7 +63,8 @@ class App:
       elif event.key == pygame.K_p:
         self.paused = not self.paused
     elif event.type == self.RENDER_FRAME_EVENT and not self.paused:
-      self.simulation.generate_next_frame()
       self.surface.fill(Color.BACKGROUND)
       self.simulation.draw_next_frame(self.surface)
       pygame.display.update()
+    elif event.type == self.GENERATE_FRAME_EVENT:
+      self.simulation.generate_next_frame()
