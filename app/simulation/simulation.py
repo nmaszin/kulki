@@ -15,11 +15,11 @@ class Simulation:
   This class is a main simulation manager
   """
   def __init__(self, config):
-    self.scene = Rectangle(0, 0, config['width'], config['height'])
+    self.scene_rectangle = Rectangle(0, 0, config['width'], config['height'])
     self.config = config
 
     positions = self.randomize_initial_balls_positions(
-      self.scene,
+      self.scene_rectangle,
       config['balls_number'],
       config['ball_radius']
     )
@@ -29,7 +29,8 @@ class Simulation:
       position=positions.pop(),
       radius=config['ball_radius'],
       velocity=config['ball_velocity'](),
-      acceleration=config['ball_acceleration']()
+      acceleration=config['ball_acceleration'](),
+      collisions_precision=config['collisions_precision']
     ))
 
     for position in positions:
@@ -37,11 +38,12 @@ class Simulation:
         position=position,
         radius=config['ball_radius'],
         velocity=config['ball_velocity'](),
-        acceleration=config['ball_acceleration']()
+        acceleration=config['ball_acceleration'](),
+        collisions_precision=config['collisions_precision']
       ))
     
     self.frames = deque([SimulationFrame(
-      self.scene,
+      self.scene_rectangle,
       balls
     )])
 
@@ -60,11 +62,11 @@ class Simulation:
     return self.frames.popleft()
   
   @staticmethod
-  def randomize_initial_balls_positions(scene, balls_number, ball_radius):
+  def randomize_initial_balls_positions(scene_rectangle, balls_number, ball_radius):
     rows_number = columns_number = math.ceil(math.sqrt(balls_number))
     
-    area_width = int(scene.width / columns_number)
-    area_height = int(scene.height / rows_number)
+    area_width = int(scene_rectangle.width / columns_number)
+    area_height = int(scene_rectangle.height / rows_number)
 
     busy_areas = [[False] * columns_number for y in range(rows_number)]
 
@@ -78,8 +80,8 @@ class Simulation:
           break
 
       rect = Rectangle(
-        scene.x + area_width * x + ball_radius,
-        scene.y + area_height * y + ball_radius,
+        scene_rectangle.x + area_width * x + ball_radius,
+        scene_rectangle.y + area_height * y + ball_radius,
         area_width - 2 * ball_radius,
         area_height - 2 * ball_radius
       )

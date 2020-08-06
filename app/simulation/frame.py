@@ -1,8 +1,8 @@
 import copy
 
 class SimulationFrame:
-  def __init__(self, scene, balls):
-    self.scene = scene
+  def __init__(self, scene_rectangle, balls):
+    self.scene_rectangle = scene_rectangle
     self.balls = balls
   
   def after(self, delta_time):
@@ -21,10 +21,10 @@ class SimulationFrame:
           ball.bounce_off_of_ball(other)
     
     for ball in balls:
-      if ball.is_collision_with_wall(self.scene):
-        ball.bounce_off_of_wall(self.scene)
+      if ball.is_collision_with_wall(self.scene_rectangle):
+        ball.bounce_off_of_wall(self.scene_rectangle)
     
     return SimulationFrame(
-      self.scene,
+      self.scene_rectangle,
       balls
     )

@@ -10,7 +10,8 @@ class SimulationConfig(Config):
     'balls_number': 100,
     'ball_radius': 10,
     'ball_velocity': lambda: Vector.from_polar(500, math.radians(random.randint(0, 360))),
-    'ball_acceleration': lambda: Vector(0, 0)
+    'ball_acceleration': lambda: Vector(0, 0),
+    'collisions_precision': 1
   }
 
   def __init__(self, config):

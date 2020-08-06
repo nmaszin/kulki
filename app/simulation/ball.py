@@ -12,11 +12,12 @@ class Ball:
   This class handle move and collisions with wall and other objects
   """
 
-  def __init__(self, position, radius, velocity, acceleration):
+  def __init__(self, position, radius, velocity, acceleration, collisions_precision):
     self.position = position
     self.radius = radius
     self.velocity = velocity
     self.acceleration = acceleration
+    self.collisions_precision = collisions_precision
 
     self.track_length = 0
   
@@ -28,14 +29,14 @@ class Ball:
     Returns True if collision between two balls has ocurred
     """
     distance = self.position.distance(ball.position)
-    return distance <= self.radius + ball.radius
+    return distance <= self.radius + ball.radius + self.collisions_precision
   
-  def is_collision_with_wall(self, scene):
+  def is_collision_with_wall(self, scene_rectangle):
     """
     Returns True if collision between ball and wall has ocurred
     Wall is a border of scene rectangle
     """
-    return not self.ball_possible_centers(scene).contains(self.position)
+    return not self.ball_possible_centers(scene_rectangle).contains(self.position)
   
   def bounce_off_of_ball(self, ball):
     """
@@ -63,12 +64,12 @@ class Ball:
     self.velocity = matrix.from_base(self_velocity_transformed)
     ball.velocity = matrix.from_base(ball_velocity_transformed)
 
-  def bounce_off_of_wall(self, scene):
+  def bounce_off_of_wall(self, scene_rectangle):
     """
     Handle ball bouncing off of walls
     Does not return anything
     """
-    possible_centers = self.ball_possible_centers(scene)
+    possible_centers = self.ball_possible_centers(scene_rectangle)
 
     if self.position.x < possible_centers.left():
       self.velocity.x *= -1
@@ -81,17 +82,17 @@ class Ball:
       self.velocity.y *= -1
 
 
-  def ball_possible_centers(self, scene):
+  def ball_possible_centers(self, scene_rectangle):
     """
     Returns a rectangle that describes area
     consisting of all possible points (centers of ball)
     which ball is able to have
     """
     return Rectangle(
-      x=scene.x + self.radius + 1,
-      y=scene.y + self.radius + 1,
-      width=scene.width - 2 * self.radius - 2,
-      height=scene.height - 2 * self.radius - 2,
+      x=scene_rectangle.x + self.radius + self.collisions_precision,
+      y=scene_rectangle.y + self.radius + self.collisions_precision,
+      width=scene_rectangle.width - 2 * self.radius - 2 * self.collisions_precision,
+      height=scene_rectangle.height - 2 * self.radius - 2 * self.collisions_precision,
     )
 
   def update(self, time_delta):
@@ -109,8 +110,8 @@ class Ball:
 class TrackedBall(Ball):
   TRACK_SIZE = 100
 
-  def __init__(self, position, radius, velocity, acceleration):
-    super().__init__(position, radius, velocity, acceleration)
+  def __init__(self, position, radius, velocity, acceleration, collisions_precision):
+    super().__init__(position, radius, velocity, acceleration, collisions_precision)
     self.previous_positions = deque([])
   
   def update(self, time_delta):
