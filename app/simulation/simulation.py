@@ -15,21 +15,21 @@ class Simulation:
   This class is a main simulation manager
   """
   def __init__(self, config):
-    self.scene = Rectangle(0, 0, config.get('width'), config.get('height'))
+    self.scene = Rectangle(0, 0, config['width'], config['height'])
     self.config = config
 
     positions = self.randomize_initial_balls_positions(
       self.scene,
-      config.get('balls_number'),
-      config.get('ball_radius')
+      config['balls_number'],
+      config['ball_radius']
     )
     
     balls = []
     balls.append(TrackedBall(
       position=positions.pop(),
-      radius=config.get('ball_radius'),
-      velocity=config.get('ball_velocity')(),
-      acceleration=config.get('ball_acceleration')(),
+      radius=config['ball_radius'],
+      velocity=config['ball_velocity'](),
+      acceleration=config['ball_acceleration'](),
       color=Color.TRACKED_BALL,
       track_color=Color.TRACK
     ))
@@ -37,9 +37,9 @@ class Simulation:
     for position in positions:
       balls.append(DrawableBall(
         position=position,
-        radius=config.get('ball_radius'),
-        velocity=config.get('ball_velocity')(),
-        acceleration=config.get('ball_acceleration')(),
+        radius=config['ball_radius'],
+        velocity=config['ball_velocity'](),
+        acceleration=config['ball_acceleration'](),
         color=Color.BALL
       ))
     
@@ -49,7 +49,7 @@ class Simulation:
     )])
 
   def generate_next_frame(self):
-    delta_time = 1 / self.config.get('simulation_fps')
+    delta_time = 1 / self.config['simulation_fps']
     last_frame = self.frames[-1]
     self.frames.append(last_frame.after(delta_time))
   

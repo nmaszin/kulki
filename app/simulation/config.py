@@ -2,8 +2,9 @@ import math
 import random
 
 from app.math.vector import Vector
+from app.config import Config
 
-class SimulationConfig:
+class SimulationConfig(Config):
   DEFAULTS = {
     'simulation_fps': 60,
     'balls_number': 100,
@@ -13,15 +14,4 @@ class SimulationConfig:
   }
 
   def __init__(self, config):
-    self.config = config
-  
-  def get(self, property):
-    if property in self.config:
-      return self.config[property]
-    
-    if property in self.DEFAULTS:
-      return self.DEFAULTS[property]
-  
-  def set(self, property, value):
-    self.config[property] = value
-
+    super().__init__(self.DEFAULTS, config)
