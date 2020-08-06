@@ -13,8 +13,10 @@ class App:
   WINDOW_ICON_PATH = 'assets/icon.png'
   WINDOW_HEIGHT = 600
   WINDOW_WIDTH = 600
+
+  BUFFERED_FRAMES_NUMBER = 10
   FPS = 60
-  GENERATE_FPS = 600
+  GENERATE_FPS = 60
 
   running = False
   paused = False
@@ -42,10 +44,10 @@ class App:
     )
 
   def init_timers(self):
-    self.GENERATE_FRAME_EVENT = pygame.USEREVENT + 1
+    self.GENERATE_FRAME_EVENT = pygame.USEREVENT
     pygame.time.set_timer(self.GENERATE_FRAME_EVENT, int(1000 / self.GENERATE_FPS))
 
-    self.RENDER_FRAME_EVENT = pygame.USEREVENT
+    self.RENDER_FRAME_EVENT = pygame.USEREVENT + 1
     pygame.time.set_timer(self.RENDER_FRAME_EVENT, int(1000 / self.FPS))
 
   def run(self):
@@ -62,7 +64,7 @@ class App:
         self.running = False
       elif event.key == pygame.K_p:
         self.paused = not self.paused
-    elif event.type == self.RENDER_FRAME_EVENT and not self.paused:
+    elif event.type == self.RENDER_FRAME_EVENT and not self.paused and self.simulation.frames_left() > self.BUFFERED_FRAMES_NUMBER:
       self.surface.fill(Color.BACKGROUND)
       frame = self.simulation.pop_frame()
       DrawableFrame(frame).draw(self.surface)
