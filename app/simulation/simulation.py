@@ -5,7 +5,7 @@ from collections import deque
 from app.math.point import Point
 from app.math.rectangle import Rectangle
 from app.math.vector import Vector
-from app.simulation.ball import DrawableBall, TrackedBall
+from app.simulation.ball import Ball, TrackedBall
 from app.simulation.frame import SimulationFrame
 from app.simulation.config import SimulationConfig
 from app.color import Color
@@ -29,18 +29,15 @@ class Simulation:
       position=positions.pop(),
       radius=config['ball_radius'],
       velocity=config['ball_velocity'](),
-      acceleration=config['ball_acceleration'](),
-      color=Color.TRACKED_BALL,
-      track_color=Color.TRACK
+      acceleration=config['ball_acceleration']()
     ))
 
     for position in positions:
-      balls.append(DrawableBall(
+      balls.append(Ball(
         position=position,
         radius=config['ball_radius'],
         velocity=config['ball_velocity'](),
-        acceleration=config['ball_acceleration'](),
-        color=Color.BALL
+        acceleration=config['ball_acceleration']()
       ))
     
     self.frames = deque([SimulationFrame(
@@ -53,12 +50,14 @@ class Simulation:
     last_frame = self.frames[-1]
     self.frames.append(last_frame.after(delta_time))
   
+  def frames_left(self):
+    return len(self.frames)
+  
   def any_frames_left(self):
-    return len(self.frames) != 0
+    return self.frames_left() != 0
 
-  def draw_next_frame(self, surface):
-    frame = self.frames.popleft()
-    frame.draw(surface)
+  def pop_frame(self):
+    return self.frames.popleft()
   
   @staticmethod
   def randomize_initial_balls_positions(scene, balls_number, ball_radius):
@@ -88,4 +87,3 @@ class Simulation:
       positions.append(rect.random_point())
     
     return positions
-

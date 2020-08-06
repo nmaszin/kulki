@@ -5,6 +5,7 @@ from app.math.rectangle import Rectangle
 from app.math.vector import Vector
 from app.simulation.simulation import Simulation
 from app.simulation.config import SimulationConfig
+from app.visualisation.frame import DrawableFrame
 from app.color import Color
 
 class App:
@@ -63,7 +64,8 @@ class App:
         self.paused = not self.paused
     elif event.type == self.RENDER_FRAME_EVENT and not self.paused:
       self.surface.fill(Color.BACKGROUND)
-      self.simulation.draw_next_frame(self.surface)
+      frame = self.simulation.pop_frame()
+      DrawableFrame(frame).draw(self.surface)
       pygame.display.update()
     elif event.type == self.GENERATE_FRAME_EVENT:
       self.simulation.generate_next_frame()

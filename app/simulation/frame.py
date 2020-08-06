@@ -28,10 +28,3 @@ class SimulationFrame:
       self.scene,
       balls
     )
-  
-  def draw(self, surface):
-    """
-    This function draw the frame content on the surface
-    """
-    for ball in self.balls:
-      ball.draw(surface)

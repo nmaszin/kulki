@@ -106,21 +106,11 @@ class Ball:
     self.track_length += abs(displacement)
     self.position = self.position.translate(displacement)
 
-
-class DrawableBall(Ball):
-  def __init__(self, position, radius, velocity, acceleration, color):
-    super().__init__(position, radius, velocity, acceleration)
-    self.color = color
-
-  def draw(self, surface):
-    Circle(self.position, self.radius, self.color).draw(surface)
-
-class TrackedBall(DrawableBall):
+class TrackedBall(Ball):
   TRACK_SIZE = 100
 
-  def __init__(self, position, radius, velocity, acceleration, color, track_color):
-    super().__init__(position, radius, velocity, acceleration, color)
-    self.track_color = track_color
+  def __init__(self, position, radius, velocity, acceleration):
+    super().__init__(position, radius, velocity, acceleration)
     self.previous_positions = deque([])
   
   def update(self, time_delta):
@@ -129,9 +119,3 @@ class TrackedBall(DrawableBall):
 
     if len(self.previous_positions) > self.TRACK_SIZE:
       self.previous_positions.popleft()
-
-  def draw(self, surface):
-    for position in self.previous_positions:
-      Circle(position, 2, self.track_color).draw(surface)
-      
-    super().draw(surface)
