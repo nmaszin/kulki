@@ -9,6 +9,7 @@ from app.color import Color
 
 class App:
   WINDOW_TITLE = 'Kulki by N-Maszin'
+  WINDOW_ICON_PATH = 'assets/icon.png'
   WINDOW_HEIGHT = 600
   WINDOW_WIDTH = 600
   FPS = 60
@@ -17,12 +18,19 @@ class App:
   paused = False
 
   def __init__(self):
+    self.init_window()
+    self.init_simulation()
+    self.init_timers()
+
+  def init_window(self):
     pygame.init()
     pygame.display.set_caption(self.WINDOW_TITLE)
-    pygame.display.set_icon(pygame.image.load('assets/icon.png'))
+    pygame.display.set_icon(pygame.image.load(self.WINDOW_ICON_PATH))
     self.surface = pygame.display.set_mode((self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
     self.surface.fill(Color.BACKGROUND)
+    pygame.display.update()
 
+  def init_simulation(self):
     self.scene = Rectangle(0, 0, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
 
     self.simulation = Simulation(
@@ -32,10 +40,9 @@ class App:
       })
     )
 
-    self.RENDER_FRAME = pygame.USEREVENT
-    pygame.time.set_timer(self.RENDER_FRAME, int(1000 / self.FPS))
-
-    pygame.display.update()
+  def init_timers(self):
+    self.RENDER_FRAME_EVENT = pygame.USEREVENT
+    pygame.time.set_timer(self.RENDER_FRAME_EVENT, int(1000 / self.FPS))
 
   def run(self):
     self.running = True
@@ -51,8 +58,7 @@ class App:
         self.running = False
       elif event.key == pygame.K_p:
         self.paused = not self.paused
-      
-    elif event.type == self.RENDER_FRAME and not self.paused:
+    elif event.type == self.RENDER_FRAME_EVENT and not self.paused:
       self.simulation.generate_next_frame()
       self.surface.fill(Color.BACKGROUND)
       self.simulation.draw_next_frame(self.surface)
