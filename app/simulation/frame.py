@@ -1,7 +1,7 @@
 import copy
 
 class SimulationFrame:
-  def __init__(self, scene, balls=[]):
+  def __init__(self, scene, balls):
     self.scene = scene
     self.balls = balls
   

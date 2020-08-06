@@ -16,15 +16,12 @@ class Point:
       self.y + vector.y
     )
   
-  def __repr__(self):
+  def __str__(self):
     return f'({self.x}, {self.y})'
+
+  def __repr__(self):
+    return str(self)
 
   def __iter__(self):
     yield self.x
     yield self.y
-  
-  def coords_int(self):
-    return Point(
-      int(self.x),
-      int(self.y)
-    )

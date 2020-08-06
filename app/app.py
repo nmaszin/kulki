@@ -32,12 +32,11 @@ class App:
     pygame.display.update()
 
   def init_simulation(self):
-    self.scene = Rectangle(0, 0, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
-
     self.simulation = Simulation(
-      self.scene,
       SimulationConfig({
-        'balls_number': 10
+        'balls_number': 10,
+        'width': self.WINDOW_WIDTH,
+        'height': self.WINDOW_HEIGHT
       })
     )
 

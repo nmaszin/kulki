@@ -32,6 +32,3 @@ class Rectangle:
   
   def bottom(self):
     return self.y + self.height
-
-
-    

@@ -12,8 +12,11 @@ class Vector:
       r * math.sin(phi)
     )
 
-  def __repr__(self):
+  def __str__(self):
     return f'[{self.x}, {self.y}]'
+
+  def __repr__(self):
+    return str(self)
 
   def __add__(self, other):
     """

@@ -14,12 +14,12 @@ class Simulation:
   """
   This class is a main simulation manager
   """
-  def __init__(self, scene, config):
-    self.scene = scene
+  def __init__(self, config):
+    self.scene = Rectangle(0, 0, config.get('width'), config.get('height'))
     self.config = config
 
     positions = self.randomize_initial_balls_positions(
-      scene,
+      self.scene,
       config.get('balls_number'),
       config.get('ball_radius')
     )
