@@ -1,11 +1,10 @@
-import pygame
-import pygame.gfxdraw
 from collections import deque
 
 from app.math.point import Point
 from app.math.vector import Vector
 from app.math.rectangle import Rectangle
 from app.math.matrix import TransformationMatrix
+from app.graphics.circle import Circle
 
 class Ball:
   """
@@ -114,18 +113,7 @@ class DrawableBall(Ball):
     self.color = color
 
   def draw(self, surface):
-    pygame.gfxdraw.aacircle(
-      surface,
-      *tuple(self.position.coords_int()),
-      self.radius,
-      self.color
-    )
-    pygame.gfxdraw.filled_circle(
-      surface,
-      *tuple(self.position.coords_int()),
-      self.radius,
-      self.color
-    )
+    Circle(self.position, self.radius, self.color).draw(surface)
 
 class TrackedBall(DrawableBall):
   TRACK_SIZE = 100
@@ -144,17 +132,6 @@ class TrackedBall(DrawableBall):
 
   def draw(self, surface):
     for position in self.previous_positions:
-      pygame.gfxdraw.aacircle(
-        surface,
-        *tuple(position.coords_int()),
-        2,
-        self.track_color
-      )
-      pygame.gfxdraw.filled_circle(
-        surface,
-        *tuple(position.coords_int()),
-        2,
-        self.track_color
-      )
+      Circle(position, 2, self.track_color).draw(surface)
       
     super().draw(surface)
