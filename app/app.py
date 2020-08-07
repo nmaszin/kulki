@@ -58,10 +58,6 @@ class App:
       for event in pygame.event.get():
         self.handle_event(event)
 
-    mean = lambda l: sum(l) / len(l)
-    print(self.simulation.pop_frame().balls[0].collisions_counter, 'kolizji')
-    print(mean(self.simulation.pop_frame().balls[0].free_paths), 'to średnia droga swobodna')
-
   def handle_event(self, event):
     if event.type == pygame.QUIT:
       self.running = False
