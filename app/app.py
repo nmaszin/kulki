@@ -38,10 +38,9 @@ class App:
   def init_simulation(self):
     self.simulation = Simulation(
       SimulationConfig({
-        'balls_number': 10,
         'width': self.WINDOW_WIDTH,
         'height': self.WINDOW_HEIGHT,
-        'simulation_fps': self.GENERATE_FPS
+        'simulation_fps': self.FPS
       })
     )
 
