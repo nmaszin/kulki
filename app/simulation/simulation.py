@@ -15,37 +15,39 @@ from app.simulation.generator import FrameGenerator
 from app.simulation.file import FrameFile
 
 
-
 class Simulation:
-  """
-  This class is a main simulation manager
-  """
-  def __init__(self, config):
-    self.scene_rectangle = Rectangle(0, 0, config['width'], config['height'])
-    self.config = config
-    
-    initial_frame = FrameGenerator(config).generate()
+    """
+    This class is a main simulation manager
+    """
 
-    if self.config['save_simulation']:
-      FrameFile(self.__generate_simulation_filename()).write(initial_frame)
+    def __init__(self, config):
+        self.scene_rectangle = Rectangle(
+            0, 0, config['width'], config['height'])
+        self.config = config
 
-    self.frames = deque([initial_frame])
+        initial_frame = FrameGenerator(config).generate()
 
-  def generate_next_frame(self):
-    delta_time = 1 / self.config['simulation_fps']
-    last_frame = self.frames[-1]
-    self.frames.append(last_frame.after(delta_time))
-  
-  def frames_left(self):
-    return len(self.frames)
-  
-  def any_frames_left(self):
-    return self.frames_left() != 0
+        if self.config['save_simulation']:
+            FrameFile(self.__generate_simulation_filename()
+                      ).write(initial_frame)
 
-  def pop_frame(self):
-    return self.frames.popleft()
-  
-  def __generate_simulation_filename(self):
-    time_string = datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
-    extension = 'sim'
-    return f'{time_string}.{extension}'
+        self.frames = deque([initial_frame])
+
+    def generate_next_frame(self):
+        delta_time = 1 / self.config['simulation_fps']
+        last_frame = self.frames[-1]
+        self.frames.append(last_frame.after(delta_time))
+
+    def frames_left(self):
+        return len(self.frames)
+
+    def any_frames_left(self):
+        return self.frames_left() != 0
+
+    def pop_frame(self):
+        return self.frames.popleft()
+
+    def __generate_simulation_filename(self):
+        time_string = datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
+        extension = 'sim'
+        return f'{time_string}.{extension}'
