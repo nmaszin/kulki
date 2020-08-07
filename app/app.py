@@ -40,7 +40,8 @@ class App:
       SimulationConfig({
         'balls_number': 10,
         'width': self.WINDOW_WIDTH,
-        'height': self.WINDOW_HEIGHT
+        'height': self.WINDOW_HEIGHT,
+        'simulation_fps': self.GENERATE_FPS
       })
     )
 
@@ -56,6 +57,10 @@ class App:
     while self.running:
       for event in pygame.event.get():
         self.handle_event(event)
+
+    mean = lambda l: sum(l) / len(l)
+    print(self.simulation.pop_frame().balls[0].collisions_counter, 'kolizji')
+    print(mean(self.simulation.pop_frame().balls[0].free_paths), 'to średnia droga swobodna')
 
   def handle_event(self, event):
     if event.type == pygame.QUIT:

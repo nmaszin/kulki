@@ -9,6 +9,6 @@ class DrawableFrame:
   def draw(self, surface):
     for ball in self.frame.balls:
       if isinstance(ball, TrackedBall):
-        DrawableTrackedBall(ball, Color.TRACKED_BALL, Color.TRACK).draw(surface)
+        DrawableTrackedBall(ball, Color.TRACKED_BALL, Color.TRACK, Color.BOUNCED_BALL).draw(surface)
       else:
         DrawableBall(ball, Color.BALL).draw(surface)

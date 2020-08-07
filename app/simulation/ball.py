@@ -18,8 +18,6 @@ class Ball:
     self.velocity = velocity
     self.acceleration = acceleration
     self.collisions_precision = collisions_precision
-
-    self.track_length = 0
   
   def __eq__(self, other):
     return self.position == other.position and self.velocity == other.velocity and self.radius == other.radius
@@ -104,8 +102,9 @@ class Ball:
     self.velocity += velocity_displacement
 
     displacement = self.velocity * time_delta
-    self.track_length += abs(displacement)
     self.position = self.position.translate(displacement)
+
+    return abs(displacement)
 
 class TrackedBall(Ball):
   TRACK_SIZE = 100
@@ -113,10 +112,29 @@ class TrackedBall(Ball):
   def __init__(self, position, radius, velocity, acceleration, collisions_precision):
     super().__init__(position, radius, velocity, acceleration, collisions_precision)
     self.previous_positions = deque([])
+
+    self.collision_effect = 0 # Used as color weight in visualisation
+    self.collisions_counter = 0
+
+    self.free_paths = []
+    self.current_free_path = 0
   
   def update(self, time_delta):
-    self.previous_positions.append(self.position)
-    super().update(time_delta)
+    self.collision_effect = max(self.collision_effect - 0.04, 0)
 
+    self.previous_positions.append(self.position)
     if len(self.previous_positions) > self.TRACK_SIZE:
       self.previous_positions.popleft()
+
+    displacement = super().update(time_delta)
+    self.current_free_path += displacement
+    return displacement
+
+  def bounce_off_of_ball(self, ball):
+    super().bounce_off_of_ball(ball)
+
+    self.collision_effect = 1
+    self.collisions_counter += 1
+
+    self.free_paths.append(self.current_free_path)
+    self.current_free_path = 0
