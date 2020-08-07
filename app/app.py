@@ -1,5 +1,6 @@
 import pygame
 import random
+import threading
 
 from app.math.rectangle import Rectangle
 from app.math.vector import Vector
@@ -70,4 +71,7 @@ class App:
       DrawableFrame(frame).draw(self.surface)
       pygame.display.update()
     elif event.type == self.GENERATE_FRAME_EVENT:
-      self.simulation.generate_next_frame()
+      t = threading.Thread(
+        target=self.simulation.generate_next_frame
+      )
+      t.start()
