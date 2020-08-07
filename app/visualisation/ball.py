@@ -12,7 +12,7 @@ class DrawableBall:
 
 
 class DrawableTrackedBall(DrawableBall):
-    def __init__(self, ball, color, track_color, bounce_color):
+    def __init__(self, ball, track_dot_radius, color, track_color, bounce_color):
         mixed_color = Color.mix(
             ball.collision_effect,
             bounce_color,
@@ -21,9 +21,10 @@ class DrawableTrackedBall(DrawableBall):
 
         super().__init__(ball, mixed_color)
         self.track_color = track_color
+        self.track_dot_radius = track_dot_radius
 
     def draw(self, surface):
         for position in self.ball.previous_positions:
-            Circle(position, 2, self.track_color).draw(surface)
+            Circle(position, self.track_dot_radius, self.track_color).draw(surface)
 
         super().draw(surface)

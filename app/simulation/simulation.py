@@ -8,7 +8,7 @@ from app.math.rectangle import Rectangle
 from app.math.vector import Vector
 from app.simulation.ball import Ball, TrackedBall
 from app.simulation.frame import SimulationFrame
-from app.simulation.config import SimulationConfig
+from app.config import SimulationConfig
 from app.color import Color
 
 from app.simulation.generator import FrameGenerator

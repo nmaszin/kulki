@@ -5,7 +5,7 @@ import threading
 from app.math.rectangle import Rectangle
 from app.math.vector import Vector
 from app.simulation.simulation import Simulation
-from app.simulation.config import SimulationConfig
+from app.config import SimulationConfig
 from app.visualisation.frame import DrawableFrame
 from app.color import Color
 
@@ -38,14 +38,14 @@ class App:
         pygame.display.update()
 
     def init_simulation(self):
-        self.simulation = Simulation(
-            SimulationConfig({
-                'width': self.WINDOW_WIDTH,
-                'height': self.WINDOW_HEIGHT,
-                'simulation_fps': self.FPS,
-                'save_simulation': False
-            })
-        )
+        self.config = SimulationConfig({
+            'width': self.WINDOW_WIDTH,
+            'height': self.WINDOW_HEIGHT,
+            'simulation_fps': self.FPS,
+            'save_simulation': False
+        })
+
+        self.simulation = Simulation(self.config)
 
     def init_timers(self):
         self.GENERATE_FRAME_EVENT = pygame.USEREVENT
@@ -72,7 +72,7 @@ class App:
         elif event.type == self.RENDER_FRAME_EVENT and not self.paused and self.simulation.frames_left() > self.BUFFERED_FRAMES_NUMBER:
             self.surface.fill(Color.BACKGROUND)
             frame = self.simulation.pop_frame()
-            DrawableFrame(frame).draw(self.surface)
+            DrawableFrame(frame, self.config).draw(self.surface)
             pygame.display.update()
         elif event.type == self.GENERATE_FRAME_EVENT:
             t = threading.Thread(
