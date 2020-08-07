@@ -1,5 +1,5 @@
 import pygame
-import pygame.gfxdraw
+from pygame import gfxdraw
 
 
 class Circle:
@@ -16,5 +16,5 @@ class Circle:
             self.color
         )
 
-        pygame.gfxdraw.aacircle(*params)
-        pygame.gfxdraw.filled_circle(*params)
+        gfxdraw.aacircle(*params)
+        gfxdraw.filled_circle(*params)

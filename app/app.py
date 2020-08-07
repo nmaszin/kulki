@@ -42,7 +42,8 @@ class App:
             SimulationConfig({
                 'width': self.WINDOW_WIDTH,
                 'height': self.WINDOW_HEIGHT,
-                'simulation_fps': self.FPS
+                'simulation_fps': self.FPS,
+                'save_simulation': False
             })
         )
 
