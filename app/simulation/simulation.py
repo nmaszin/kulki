@@ -20,21 +20,15 @@ class Simulation:
     This class is a main simulation manager
     """
 
-    def __init__(self, config):
+    def __init__(self, config, initial_frame):
         self.scene_rectangle = Rectangle(
             0, 0, config['width'], config['height'])
+        
         self.config = config
-
-        initial_frame = FrameGenerator(config).generate()
-
-        if self.config['save_simulation']:
-            FrameFile(self.__generate_simulation_filename()
-                      ).write(initial_frame)
-
         self.frames = deque([initial_frame])
 
     def generate_next_frame(self):
-        delta_time = 1 / self.config['simulation_fps']
+        delta_time = 1 / self.config['engine_fps']
         last_frame = self.frames[-1]
         self.frames.append(last_frame.after(delta_time))
 
@@ -47,7 +41,3 @@ class Simulation:
     def pop_frame(self):
         return self.frames.popleft()
 
-    def __generate_simulation_filename(self):
-        time_string = datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
-        extension = 'sim'
-        return f'{time_string}.{extension}'

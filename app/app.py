@@ -13,17 +13,16 @@ from app.graphics.color import Color
 class App:
     WINDOW_TITLE = 'Kulki by N-Maszin'
     WINDOW_ICON_PATH = 'assets/icon.png'
-    WINDOW_HEIGHT = 600
-    WINDOW_WIDTH = 600
 
     BUFFERED_FRAMES_NUMBER = 10
-    FPS = 60
-    GENERATE_FPS = 60
 
     running = False
     paused = False
 
-    def __init__(self):
+    def __init__(self, config, initial_frame):
+        self.config = config
+        self.initial_frame = initial_frame
+
         self.init_window()
         self.init_simulation()
         self.init_timers()
@@ -33,27 +32,20 @@ class App:
         pygame.display.set_caption(self.WINDOW_TITLE)
         pygame.display.set_icon(pygame.image.load(self.WINDOW_ICON_PATH))
         self.surface = pygame.display.set_mode(
-            (self.WINDOW_WIDTH, self.WINDOW_HEIGHT))
+            (self.config['width'], self.config['height']))
         self.surface.fill(Color.BACKGROUND)
         pygame.display.update()
 
     def init_simulation(self):
-        self.config = SimulationConfig({
-            'width': self.WINDOW_WIDTH,
-            'height': self.WINDOW_HEIGHT,
-            'simulation_fps': self.FPS,
-            'save_simulation': False
-        })
-
-        self.simulation = Simulation(self.config)
+        self.simulation = Simulation(self.config, self.initial_frame)
 
     def init_timers(self):
         self.GENERATE_FRAME_EVENT = pygame.USEREVENT
         pygame.time.set_timer(self.GENERATE_FRAME_EVENT,
-                              int(1000 / self.GENERATE_FPS))
+                              int(1000 / self.config['engine_fps']))
 
         self.RENDER_FRAME_EVENT = pygame.USEREVENT + 1
-        pygame.time.set_timer(self.RENDER_FRAME_EVENT, int(1000 / self.FPS))
+        pygame.time.set_timer(self.RENDER_FRAME_EVENT, int(1000 / self.config['fps']))
 
     def run(self):
         self.running = True
