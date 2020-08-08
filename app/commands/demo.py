@@ -32,7 +32,7 @@ class DemoCommand(climmands.Command):
             frame = FrameFile(parsed_arguments.file).read()
         elif parsed_arguments.action == 'save':
             frame = FrameGenerator(self.config).generate()
-            filename = parsed_arguments.file or self.__generate_simulation_filename()
+            filename = parsed_arguments.file or FrameGenerator.generate_name()
             FrameFile(filename).write(frame)
         else:
             frame = FrameGenerator(self.config).generate()
@@ -40,7 +40,4 @@ class DemoCommand(climmands.Command):
         app = App(self.config, frame)
         app.run()
     
-    def __generate_simulation_filename(self):
-        time_string = datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
-        extension = 'sim'
-        return f'{time_string}.{extension}'
+    

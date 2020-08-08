@@ -8,7 +8,7 @@ from app.simulation.simulation import Simulation
 from app.config import SimulationConfig
 from app.visualisation.frame import DrawableFrame
 from app.graphics.color import Color
-
+from app.simulation.file import FrameFile
 
 class App:
     WINDOW_TITLE = 'Kulki by N-Maszin'
@@ -22,6 +22,7 @@ class App:
     def __init__(self, config, initial_frame):
         self.config = config
         self.initial_frame = initial_frame
+        self.simulation_saved = False
 
         self.init_window()
         self.init_simulation()
@@ -61,6 +62,12 @@ class App:
                 self.running = False
             elif event.key == pygame.K_p:
                 self.paused = not self.paused
+            elif event.key == pygame.K_s and not self.simulation_saved:
+                FrameFile(FrameFile.generate_name()).write(self.initial_frame)
+                self.simulation_saved = True
+                print('Saved successfully')
+                
+
         elif event.type == self.RENDER_FRAME_EVENT and not self.paused and self.simulation.frames_left() > self.BUFFERED_FRAMES_NUMBER:
             self.surface.fill(Color.BACKGROUND)
             frame = self.simulation.pop_frame()
