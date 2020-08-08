@@ -14,6 +14,8 @@ from app.graphics.color import Color
 from app.simulation.generator import FrameGenerator
 from app.simulation.file import FrameFile
 
+from app.list import DoubleLinkedList
+
 
 class Simulation:
     """
@@ -25,19 +27,24 @@ class Simulation:
             0, 0, config['width'], config['height'])
         
         self.config = config
-        self.frames = deque([initial_frame])
+        self.frames = DoubleLinkedList.from_list([initial_frame])
+        self.current_frame_iterator = self.frames.iterator_first()
 
     def generate_next_frame(self):
         delta_time = 1 / self.config['engine_fps']
-        last_frame = self.frames[-1]
-        self.frames.append(last_frame.after(delta_time))
+        self.frames.push_last(self.frames.last().after(delta_time))
 
-    def frames_left(self):
-        return len(self.frames)
+    def is_first_frame(self):
+        return not self.current_frame_iterator.has_previous()
+    
+    def is_last_frame(self):
+        return not self.current_frame_iterator.has_next()
 
-    def any_frames_left(self):
-        return self.frames_left() != 0
-
-    def pop_frame(self):
-        return self.frames.popleft()
+    def next_frame(self):
+        self.current_frame_iterator = self.current_frame_iterator.next
+        return self.current_frame_iterator.previous.value
+    
+    def previous_frame(self):
+        self.current_frame_iterator = self.current_frame_iterator.previous
+        return self.current_frame_iterator.next.value
 

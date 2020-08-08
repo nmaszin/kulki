@@ -14,8 +14,6 @@ class App:
     WINDOW_TITLE = 'Kulki by N-Maszin'
     WINDOW_ICON_PATH = 'assets/icon.png'
 
-    BUFFERED_FRAMES_NUMBER = 10
-
     running = False
     paused = False
 
@@ -23,6 +21,7 @@ class App:
         self.config = config
         self.initial_frame = initial_frame
         self.simulation_saved = False
+        self.simulation_backward = False
 
         self.init_window()
         self.init_simulation()
@@ -66,14 +65,26 @@ class App:
                 FrameFile(FrameFile.generate_name()).write(self.initial_frame)
                 self.simulation_saved = True
                 print('Saved successfully')
-                
+            elif event.key == pygame.K_b:
+                self.simulation_backward = True
+            elif event.key == pygame.K_f:
+                self.simulation_backward = False
 
-        elif event.type == self.RENDER_FRAME_EVENT and not self.paused and self.simulation.frames_left() > self.BUFFERED_FRAMES_NUMBER:
-            self.surface.fill(Color.BACKGROUND)
-            frame = self.simulation.pop_frame()
-            DrawableFrame(frame, self.config).draw(self.surface)
-            pygame.display.update()
-        elif event.type == self.GENERATE_FRAME_EVENT:
+        elif event.type == self.RENDER_FRAME_EVENT and not self.paused:
+            if self.simulation_backward and not self.simulation.is_first_frame():
+                print('b')
+                self.surface.fill(Color.BACKGROUND)
+                frame = self.simulation.previous_frame()
+                DrawableFrame(frame, self.config).draw(self.surface)
+                pygame.display.update()
+            elif not self.simulation.is_last_frame():
+                print('f')
+                self.surface.fill(Color.BACKGROUND)
+                frame = self.simulation.next_frame()
+                DrawableFrame(frame, self.config).draw(self.surface)
+                pygame.display.update()
+
+        elif event.type == self.GENERATE_FRAME_EVENT and not self.simulation_backward:
             t = threading.Thread(
                 target=self.simulation.generate_next_frame
             )

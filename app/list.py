@@ -12,52 +12,72 @@ class DoubleLinkedListNode:
 
 class DoubleLinkedList:
     def __init__(self):
-        self.first = None
-        self.last = None
+        self.first_node = None
+        self.last_node = None
     
-    def push_left(self, value):
-        if self.first is None:
-            self.first = self.last = DoubleLinkedListNode(value, None, None)
+    def push_first(self, value):
+        if self.first_node is None:
+            self.first_node = self.last_node = DoubleLinkedListNode(value, None, None)
         else:
-            node = DoubleLinkedListNode(value, None, self.first)
-            self.first = node
+            node = DoubleLinkedListNode(value, None, self.first_node)
+            self.first_node = node
 
-    def push_right(self, value):
-        if self.first is None:
-            self.first = self.last = DoubleLinkedListNode(value, None, None)
+    def push_last(self, value):
+        if self.first_node is None:
+            self.first_node = self.last_node = DoubleLinkedListNode(value, None, None)
         else:
-            self.last.next = DoubleLinkedListNode(value, self.last, None)
-            self.last = self.last.next
+            self.last_node.next = DoubleLinkedListNode(value, self.last_node, None)
+            self.last_node = self.last_node.next
 
-    def pop_left(self):
-        if self.first is None:
+    def pop_first(self):
+        value = self.first()
+
+        if self.first_node is None:
             return None
-        elif self.first is self.last:
-            self.first = None
-            self.last = None
+        elif self.first_node is self.last_node:
+            self.first_node = None
+            self.last_node = None
         else:
-            self.first = self.first.next
+            self.first_node = self.first_node.next
 
-    def pop_right(self):
-        if self.last is None:
+        return value
+
+    def pop_last(self):
+        value = self.last()
+
+        if self.last_node is None:
             return None
-        elif self.first is self.last:
-            self.first = None
-            self.last = None
+        elif self.first_node is self.last_node:
+            self.first_node = None
+            self.last_node = None
         else:
-            self.last = self.last.previous
+            self.last_node = self.last_node.previous
+
+        return value
+
+    def first(self):
+        return self.first_node.value
+
+    def last(self):
+        return self.last_node.value
+
+    def iterator_first(self):
+        return self.first_node
+    
+    def iterator_last(self):
+        return self.last_node
 
     def empty(self):
-        return self.first is None
+        return self.first_node is None
 
     def __iter__(self):
-        node = self.first
+        node = self.first_node
         while node is not None:
             yield node.value
             node = node.next
 
     def __reversed__(self):
-        node = self.last
+        node = self.last_node
         while node is not None:
             yield node.value
             node = node.previous
@@ -68,7 +88,7 @@ class DoubleLinkedList:
 
     def __len__(self):
         counter = 0
-        node = self.first
+        node = self.first_node
         while node is not None:
             node = node.next
             counter += 1
@@ -78,6 +98,6 @@ class DoubleLinkedList:
     def from_list(data):
         l = DoubleLinkedList()
         for element in data:
-            l.push_right(element)
+            l.push_last(element)
         
         return l

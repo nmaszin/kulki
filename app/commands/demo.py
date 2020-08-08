@@ -6,6 +6,8 @@ from app.simulation.file import FrameFile
 from app.config import SimulationConfig
 from app.simulation.generator import FrameGenerator
 
+from app.math.vector import Vector
+
 class DemoCommand(climmands.Command):
     name = 'demo'
     description = 'Run a demo'
