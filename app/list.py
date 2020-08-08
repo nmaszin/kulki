@@ -17,16 +17,16 @@ class DoubleLinkedList:
     
     def push_left(self, value):
         if self.first is None:
-            self.first = self.last = ListNode(value, None, None)
+            self.first = self.last = DoubleLinkedListNode(value, None, None)
         else:
-            node = ListNode(value, None, self.first)
+            node = DoubleLinkedListNode(value, None, self.first)
             self.first = node
 
     def push_right(self, value):
         if self.first is None:
-            self.first = self.last = ListNode(value, None, None)
+            self.first = self.last = DoubleLinkedListNode(value, None, None)
         else:
-            self.last.next = ListNode(value, self.last, None)
+            self.last.next = DoubleLinkedListNode(value, self.last, None)
             self.last = self.last.next
 
     def pop_left(self):
@@ -65,6 +65,14 @@ class DoubleLinkedList:
     def __repr__(self):
         values = ', '.join(list(map(str, self)))
         return f'[{values}]'
+
+    def __len__(self):
+        counter = 0
+        node = self.first
+        while node is not None:
+            node = node.next
+            counter += 1
+        return counter
 
     @staticmethod
     def from_list(data):
