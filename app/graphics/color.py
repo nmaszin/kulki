@@ -1,6 +1,5 @@
 import random
 
-
 class Color:
     BACKGROUND = (20, 20, 20)
     BALL = (240, 0, 0)

@@ -1,4 +1,4 @@
-from app.color import Color
+from app.graphics.color import Color
 from app.graphics.circle import Circle
 
 

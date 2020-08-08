@@ -7,7 +7,7 @@ from app.math.vector import Vector
 from app.simulation.simulation import Simulation
 from app.config import SimulationConfig
 from app.visualisation.frame import DrawableFrame
-from app.color import Color
+from app.graphics.color import Color
 
 
 class App:

@@ -1,6 +1,6 @@
 from app.simulation.ball import Ball, TrackedBall
 from app.visualisation.ball import DrawableBall, DrawableTrackedBall
-from app.color import Color
+from app.graphics.color import Color
 
 
 class DrawableFrame:
