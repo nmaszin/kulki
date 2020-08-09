@@ -72,17 +72,17 @@ class App:
 
         elif event.type == self.RENDER_FRAME_EVENT and not self.paused:
             if self.simulation_backward and not self.simulation.is_first_frame():
-                print('b')
                 self.surface.fill(Color.BACKGROUND)
                 frame = self.simulation.previous_frame()
                 DrawableFrame(frame, self.config).draw(self.surface)
                 pygame.display.update()
             elif not self.simulation.is_last_frame():
-                print('f')
                 self.surface.fill(Color.BACKGROUND)
                 frame = self.simulation.next_frame()
                 DrawableFrame(frame, self.config).draw(self.surface)
                 pygame.display.update()
+
+            print(id(self.simulation.current_frame_iterator))
 
         elif event.type == self.GENERATE_FRAME_EVENT and not self.simulation_backward:
             t = threading.Thread(

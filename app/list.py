@@ -19,8 +19,8 @@ class DoubleLinkedList:
         if self.first_node is None:
             self.first_node = self.last_node = DoubleLinkedListNode(value, None, None)
         else:
-            node = DoubleLinkedListNode(value, None, self.first_node)
-            self.first_node = node
+            self.first_node = DoubleLinkedListNode(value, None, self.first_node)
+            self.first_node.next.previous = self.first_node
 
     def push_last(self, value):
         if self.first_node is None:
@@ -39,6 +39,7 @@ class DoubleLinkedList:
             self.last_node = None
         else:
             self.first_node = self.first_node.next
+            self.first_node.previous = None
 
         return value
 
@@ -52,6 +53,7 @@ class DoubleLinkedList:
             self.last_node = None
         else:
             self.last_node = self.last_node.previous
+            self.last_node.next = None
 
         return value
 
