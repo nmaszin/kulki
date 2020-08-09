@@ -34,17 +34,17 @@ class Simulation:
         delta_time = 1 / self.config['engine_fps']
         self.frames.push_last(self.frames.last().after(delta_time))
 
-    def is_first_frame(self):
+    def at_first_frame(self):
         return not self.current_frame_iterator.has_previous()
     
-    def is_last_frame(self):
+    def at_last_frame(self):
         return not self.current_frame_iterator.has_next()
 
-    def next_frame(self):
+    def go_to_next_frame(self):
         self.current_frame_iterator = self.current_frame_iterator.next
         return self.current_frame_iterator.previous.value
     
-    def previous_frame(self):
+    def go_to_previous_frame(self):
         self.current_frame_iterator = self.current_frame_iterator.previous
         return self.current_frame_iterator.next.value
 
