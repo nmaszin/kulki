@@ -1,5 +1,6 @@
 import math
 import random
+import yaml
 
 from app.math.vector import Vector
 
@@ -29,9 +30,11 @@ class Config:
 
 class SimulationConfig(Config):
     DEFAULTS = {
-        'save_simulation': True,
+        'width': 600,
+        'height': 600,
+        'fps': 60,
+        'engine_fps': 60,
 
-        'simulation_fps': 60,
         'collisions_precision': 1,
         'balls_radius': 10,
         'track_dots_radius': 2,
@@ -47,3 +50,25 @@ class SimulationConfig(Config):
 
     def __init__(self, config):
         super().__init__(self.DEFAULTS, config)
+
+class YamlConfigFileException(Exception):
+    pass
+
+class YamlConfigFile:
+    def __init__(self, path):
+        self.path = path
+    
+    def read(self):
+        try:
+            with open(self.path, 'r') as f:
+                config = yaml.safe_load(f.read())
+                return config
+        except IOError:
+            raise YamlConfigFileException(f'Error reading file {self.path}')
+
+    def write(self, config):
+        try:
+            with open(self.path, 'w') as f:
+                yaml.dump(config, f)
+        except IOError:
+            raise YamlConfigFileException(f'Error writing file {self.path}')
