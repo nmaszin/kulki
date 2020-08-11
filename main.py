@@ -6,7 +6,6 @@ os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 'hide'
 import argparse
 import climmands
 
-from app.app import App
 from app.commands import *
 
 def main():

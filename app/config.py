@@ -34,6 +34,7 @@ class SimulationConfig(Config):
         'height': 600,
         'fps': 60,
         'engine_fps': 60,
+        'exit_at_the_end_of_simulation': True,
 
         'collisions_precision': 1,
         'balls_radius': 10,

@@ -139,3 +139,9 @@ class TrackedBall(Ball):
 
         self.free_paths.append(self.current_free_path)
         self.current_free_path = 0
+    
+    def statistics(self):
+        return {
+            'collisions_counter': self.collisions_counter,
+            'free_paths': self.free_paths
+        }

@@ -10,7 +10,7 @@ from app.visualisation.frame import DrawableFrame
 from app.graphics.color import Color
 from app.simulation.file import FrameFile
 
-class App:
+class VisualisationWindow:
     WINDOW_TITLE = 'Kulki by N-Maszin'
     WINDOW_ICON_PATH = 'assets/icon.png'
 
@@ -52,10 +52,13 @@ class App:
         while self.running:
             for event in pygame.event.get():
                 self.handle_event(event)
+        
+        return self.simulation.current_frame()
 
     def handle_event(self, event):
         if event.type == pygame.QUIT:
             self.running = False
+
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 self.running = False
@@ -71,19 +74,19 @@ class App:
                 self.simulation_backward = False
 
         elif event.type == self.RENDER_FRAME_EVENT and not self.paused:
-            if self.simulation_backward and not self.simulation.at_first_frame():
+            def obtain_and_render_frame(obtainer):
                 self.surface.fill(Color.BACKGROUND)
-                frame = self.simulation.go_to_previous_frame()
-                DrawableFrame(frame, self.config).draw(self.surface)
-                pygame.display.update()
-            elif not self.simulation_backward and not self.simulation.at_last_frame():
-                self.surface.fill(Color.BACKGROUND)
-                frame = self.simulation.go_to_next_frame()
+                frame = obtainer()
                 DrawableFrame(frame, self.config).draw(self.surface)
                 pygame.display.update()
 
-        elif event.type == self.GENERATE_FRAME_EVENT and not self.simulation_backward:
-            t = threading.Thread(
-                target=self.simulation.generate_next_frame
-            )
-            t.start()
+            if self.simulation_backward and not self.simulation.at_first_frame():
+                obtain_and_render_frame(self.simulation.go_to_previous_frame)
+            elif not self.simulation_backward and not self.simulation.at_last_frame():
+                obtain_and_render_frame(self.simulation.go_to_next_frame)
+            
+            if self.simulation.should_end() and self.config['exit_at_the_end_of_simulation']:
+                self.running = False
+
+        elif event.type == self.GENERATE_FRAME_EVENT and not self.simulation_backward and not self.simulation.should_end():
+            threading.Thread(target=self.simulation.generate_next_frame).start()

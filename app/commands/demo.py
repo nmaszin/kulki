@@ -1,7 +1,7 @@
 import climmands
 from datetime import datetime
 
-from app.app import App
+from app.visualisation.window import VisualisationWindow
 from app.simulation.file import FrameFile
 from app.config import SimulationConfig, YamlConfigFile
 from app.simulation.generator import FrameGenerator
@@ -27,7 +27,7 @@ class DemoCommand(climmands.Command):
         config = self.obtain_config(parsed_arguments)
         frame = self.obtain_frame(config, parsed_arguments)        
 
-        app = App(config, frame)
+        app = VisualisationWindow(config, frame)
         app.run()
     
     def obtain_frame(self, config, parsed_arguments):
