@@ -1,4 +1,5 @@
 import yaml
+import json
 import climmands
 from datetime import datetime
 
@@ -18,7 +19,8 @@ class SimulationCommand(climmands.Command):
 
     def initialize_arguments_parser(self, parser):
         parser.add_argument('--config', help='Path to config file')
-        parser.add_argument('--visualisation', action='store_true', help='Render simulation\'s visualisation')
+        parser.add_argument('--visual', action='store_true', help='Render simulation\'s visualisation')
+        parser.add_argument('--json', action='store_true', help='Print results as json')
         subparsers = parser.add_subparsers(dest='action')
 
         save_parser = subparsers.add_parser('save', help='Save simulation to file')
@@ -30,8 +32,8 @@ class SimulationCommand(climmands.Command):
     def execute(self, parsed_arguments):
         config = self.obtain_config(parsed_arguments)
         initial_frame = self.obtain_initial_frame(config, parsed_arguments)
-        last_frame = self.obtain_last_frame(config, initial_frame, parsed_arguments.visualisation)
-        self.print_statistics(last_frame)
+        last_frame = self.obtain_last_frame(config, initial_frame, parsed_arguments.visual)
+        self.print_statistics(parsed_arguments.json, last_frame)
 
     def obtain_initial_frame(self, config, parsed_arguments):
         if parsed_arguments.action == 'load':
@@ -72,10 +74,15 @@ class SimulationCommand(climmands.Command):
 
         return simulation.current_frame()
 
-    def print_statistics(self, last_frame):
-        for index, ball in enumerate(ResultsObtainer(last_frame).obtain()):
-            print(f'Tracked ball nr {index + 1}')
-            for key, value in ball.items():
-                print(f'\t{key} = {value}')
+    def print_statistics(self, as_json, last_frame):
+        results = ResultsObtainer(last_frame).obtain()
 
-            print()
+        if as_json:
+            print(json.dumps(results, indent=4, sort_keys=True))
+        else:
+            for index, ball in enumerate(results):
+                print(f'Tracked ball nr {index + 1}')
+                for key, value in ball.items():
+                    print(f'\t{key} = {value}')
+
+                print()
