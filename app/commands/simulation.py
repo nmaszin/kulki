@@ -31,8 +31,7 @@ class SimulationCommand(climmands.Command):
         config = self.obtain_config(parsed_arguments)
         initial_frame = self.obtain_initial_frame(config, parsed_arguments)
         last_frame = self.obtain_last_frame(config, initial_frame, parsed_arguments.visualisation)
-
-        print(ResultsObtainer(last_frame).obtain())
+        self.print_statistics(last_frame)
 
     def obtain_initial_frame(self, config, parsed_arguments):
         if parsed_arguments.action == 'load':
@@ -66,3 +65,11 @@ class SimulationCommand(climmands.Command):
             simulation.go_to_next_frame()
 
         return simulation.current_frame()
+
+    def print_statistics(self, last_frame):
+        for index, ball in enumerate(ResultsObtainer(last_frame).obtain()):
+            print(f'Tracked ball nr {index + 1}')
+            for key, value in ball.items():
+                print(f'\t{key} = {value}')
+
+            print()

@@ -141,7 +141,8 @@ class TrackedBall(Ball):
         self.current_free_path = 0
     
     def statistics(self):
+        avg = lambda x: sum(x) / len(x)
         return {
             'collisions_counter': self.collisions_counter,
-            'free_paths': self.free_paths
+            'average_free_path': avg(self.free_paths)
         }
