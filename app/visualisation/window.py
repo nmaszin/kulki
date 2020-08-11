@@ -48,11 +48,14 @@ class VisualisationWindow:
         pygame.time.set_timer(self.RENDER_FRAME_EVENT, int(1000 / self.config['fps']))
 
     def run(self):
-        self.running = True
-        while self.running:
-            for event in pygame.event.get():
-                self.handle_event(event)
-        
+        try:
+            self.running = True
+            while self.running:
+                for event in pygame.event.get():
+                    self.handle_event(event)
+        except KeyboardInterrupt:
+            pass
+
         return self.simulation.current_frame()
 
     def handle_event(self, event):

@@ -58,11 +58,17 @@ class SimulationCommand(climmands.Command):
     def obtain_last_frame(self, config, initial_frame, with_visualisation):
         if with_visualisation:
             return VisualisationWindow(config, initial_frame).run()
+        else:
+            return self.nonvisual_simulation(config, initial_frame)
 
+    def nonvisual_simulation(self, config, initial_frame):  
         simulation = Simulation(config, initial_frame)
-        while not simulation.should_end():
-            simulation.generate_next_frame()
-            simulation.go_to_next_frame()
+        try:
+            while not simulation.should_end():
+                simulation.generate_next_frame()
+                simulation.go_to_next_frame()
+        except KeyboardInterrupt:
+            pass
 
         return simulation.current_frame()
 

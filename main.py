@@ -3,6 +3,9 @@
 import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 'hide'
 
+import signal
+signal.signal(signal.SIGINT, signal.default_int_handler)
+
 import argparse
 import climmands
 
