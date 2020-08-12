@@ -15,6 +15,6 @@ class FrameFile:
 
     @staticmethod
     def generate_name():
-        time_string = datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
+        time_string = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         extension = 'sim'
         return f'{time_string}.{extension}'
