@@ -1,3 +1,5 @@
 __all__ = [
-    'simulation'
+    'simulation',
+    'multisimulation',
+    'plot'
 ]
