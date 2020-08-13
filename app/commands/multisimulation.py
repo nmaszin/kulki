@@ -9,12 +9,14 @@ from app.simulation.simulation import Simulation
 from app.simulation.results import ResultsObtainer
 from app.config import ConfigObtainer
 from app.simulation.generator import FrameGenerator
+from app.json_file import JsonFile
 
 class MultiSimulationCommand(climmands.Command):
     name = 'multisimulation'
     description = 'Perform multiple simulations for different balls number'
 
     def initialize_arguments_parser(self, parser):
+        parser.add_argument('results', help='Path to file with results')
         parser.add_argument('--config', help='Path to config file')
 
     def execute(self, parsed_arguments):
@@ -37,8 +39,7 @@ class MultiSimulationCommand(climmands.Command):
 
             results[current_balls_number] = current_results
 
-        print(json.dumps(results))
-
+        JsonFile(parsed_arguments.results).write(results)
 
     def nonvisual_simulation(self, config, initial_frame):  
         simulation = Simulation(config, initial_frame)

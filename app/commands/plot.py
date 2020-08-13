@@ -5,18 +5,17 @@ import climmands
 from datetime import datetime
 import matplotlib.pyplot as pyplot
 
-from app.config import ConfigObtainer
+from app.json_file import JsonFile
 
 class PlotCommand(climmands.Command):
     name = 'plot'
     description = 'Plot results'
 
     def initialize_arguments_parser(self, parser):
-        parser.add_argument('--config', help='Path to config file')
+        parser.add_argument('results', help='Path to file with results')
 
     def execute(self, parsed_arguments):
-        config = ConfigObtainer(parsed_arguments.config).obtain()
-        results = json.load(sys.stdin)
+        results = JsonFile(parsed_arguments.results).read()
 
         transformed_results = {}
         for x_value, stats in results.items():
