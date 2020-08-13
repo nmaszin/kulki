@@ -63,7 +63,7 @@ class VisualisationWindow:
             elif event.key == pygame.K_p:
                 self.paused = not self.paused
             elif event.key == pygame.K_s and not self.simulation_saved:
-                FrameFile(FrameFile.generate_name()).write(self.simulation.frames[0])
+                SimulationFile(SimulationFile.generate_name()).write(self.simulation)
                 self.simulation_saved = True
                 print('Saved successfully')
             elif event.key == pygame.K_b:
