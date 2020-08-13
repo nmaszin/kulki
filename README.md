@@ -1,6 +1,6 @@
 # Kulki
 
-Program symulujący zachowanie się gazu doskonałego w szczelnie zamkniętym zbiorniku.
+Program symulujący zachowanie się gazu doskonałego w szczelnie zamkniętym zbiorniku. Zawiera on zarówno zwyczajne atomy (koloru czerwonego), jak i szczególne atomy śledzone (koloru niebieskiego), które zostawiają za sobą ślad.
 
 ## Informacje wstępne
 
@@ -70,4 +70,23 @@ Symulację można zapauzować (i analogicznie, powrócić do jej wykonania) wcis
 Jeżeli uznaliśmy obecną symulację za interesującą, a nie wywołaliśmy komendy z parametrem `save`, nie wszystko stracone. Można to zrobić także w trakcie działania symulacji (pod warunkiem, że jest to symulacja z wizualizacją). Wystarczy wcisnąć klawisz `S` (*save*).
 
 Symulację można również przewijać do przodu oraz do tyłu. W tym celu służą odpowiednio klawisze `F` (*forward*) i `B` (*back*).
+
+## Wykaz opcji konfiguracji
+
+Poniższa tabela zawiera wykaz wszystkich opcji konfiguracji, wraz z ich opisem oraz wartościami domyślnymi.
+
+| Identyfikator opcji                     | Opis opcji                                                   | Wartość domyślna |
+| --------------------------------------- | ------------------------------------------------------------ | ---------------- |
+| `width`                                 | Szerokość zbiornika stosowanego w symulacji i zarazem szerokość okna wizualizacji (w pikselach) | `600`            |
+| `height`                                | Wysokość zbiornika stosowanego w symulacji i zarazem wysokość okna wizualizacji (w pikselach) | `600`            |
+| `fps`                                   | Liczba klatek na sekundę, renderowanych w oknie wizualizacji - im większa jest ta wartość, tym szybciej będzie prezentowała się symulacja | `60`             |
+| `engine_fps`                            | Liczba klatek na sekundę, jako jednostkę czasu w symulacji - im większa jest ta wartość, tym dokładniejsza będzie symulacja | `60`             |
+| `collisions_precision`                  | Precyzja kolizji - oznacza odległość pomiędzy krawędziami obiektów (kulka lub ściana), przy której ma wystąpić kolizja. | `1`              |
+| `balls_radius`                          | Rozmiar kulek (promień)                                      | `10`             |
+| `track_dots_radius`                     | Rozmiar kropek, wchodzących w skład śladu, jaki pozostawia za sobą kulka śledzona. | `2`              |
+| `regular_balls_number`                  | Liczba zwykłych atomów (czerwonych, nieśledzonych) uczestniczących w symulacji | `10`             |
+| `tracked_balls_number`                  | Liczba atomów śledzonych (niebieskich) uczestniczących w symulacji | `1`              |
+| `simulation_max_frames`                 | Czas trwania symulacji, wyrażony w klatkach. Jeżeli opcja nie jest ustawiona, symulacja trwa w nieskończoność |                  |
+| `exit_at_the_end_of_simulation`         | Jeżeli opcja ustawiona jest na `true`, po zakończeniu symulacji, okno wizualizacji się automatycznie zamyka. W przeciwnym wypadku, czeka na reakcję użytkownika. | `true`           |
+| `multisimulation_balls_number_sequence` | Trzyelementowa lista, określająca liczbę atomów w poszczególnych symulacjach, uruchamianych w trybie wsadowym przez komendę `multisimulation`. Pierwszym elementem jest liczba początkowa, w drugiej jest krok (przyrost), a w trzeciej - całkowita liczba symulacji. |                  |
 
