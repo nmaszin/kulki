@@ -5,11 +5,11 @@ from datetime import datetime
 
 from app.simulation.simulation import Simulation
 from app.visualisation.window import VisualisationWindow
-from app.simulation.file import FrameFile
+from app.simulation.file import SimulationFile
 from app.config import SimulationConfig
 from app.simulation.generator import FrameGenerator
 from app.simulation.results import ResultsObtainer
-from app.config import JsonConfigFile, SimulationConfig
+from app.config import ConfigObtainer
 
 from app.math.vector import Vector
 
@@ -21,8 +21,9 @@ class SimulationCommand(climmands.Command):
         parser.add_argument('--config', help='Path to config file')
         parser.add_argument('--visual', action='store_true', help='Render simulation\'s visualisation')
         parser.add_argument('--json', action='store_true', help='Print results as json')
-        subparsers = parser.add_subparsers(dest='action')
 
+        subparsers = parser.add_subparsers(dest='action')
+        
         save_parser = subparsers.add_parser('save', help='Save simulation to file')
         save_parser.add_argument('file', nargs='?', help='Simulation file')
 
@@ -30,41 +31,31 @@ class SimulationCommand(climmands.Command):
         load_parser.add_argument('file', help='Simulation file')
 
     def execute(self, parsed_arguments):
-        config = self.obtain_config(parsed_arguments)
-        initial_frame = self.obtain_initial_frame(config, parsed_arguments)
-        last_frame = self.obtain_last_frame(config, initial_frame, parsed_arguments.visual)
+        simulation = self.obtain_simulation(parsed_arguments)    
+        self.save_simulation_if_specified(parsed_arguments, simulation)
+        last_frame = self.perform_simulation(simulation, parsed_arguments.visual)
         self.print_statistics(parsed_arguments.json, last_frame)
 
-    def obtain_initial_frame(self, config, parsed_arguments):
+
+    def obtain_simulation(self, parsed_arguments):
         if parsed_arguments.action == 'load':
-            frame = FrameFile(parsed_arguments.file).read()
-        elif parsed_arguments.action == 'save':
-            frame = FrameGenerator(config).generate()
-            filename = parsed_arguments.file or FrameGenerator.generate_name()
-            FrameFile(filename).write(frame)
-        else:
-            frame = FrameGenerator(config).generate()
+            return SimulationFile(parsed_arguments.file).read()
+    
+        config = ConfigObtainer(parsed_arguments.config).obtain()
+        initial_frame = FrameGenerator(config).generate()
+        return Simulation(config, initial_frame)
 
-        return frame
+    def save_simulation_if_specified(self, parsed_arguments, simulation):
+        if parsed_arguments.action == 'save':
+            SimulationFile(parsed_arguments.file).write(simulation)
 
-    def obtain_config(self, parsed_arguments):
-        config_path = parsed_arguments.config
-
-        if config_path is None:
-            custom_user_config = {}
-        else:
-            custom_user_config = JsonConfigFile(config_path).read()
-
-        return SimulationConfig(custom_user_config)
-
-    def obtain_last_frame(self, config, initial_frame, with_visualisation):
+    def perform_simulation(self, simulation, with_visualisation):
         if with_visualisation:
-            return VisualisationWindow(config, initial_frame).run()
+            return VisualisationWindow(simulation).run()
         else:
-            return self.nonvisual_simulation(config, initial_frame)
+            return self.nonvisual_simulation(simulation)
 
-    def nonvisual_simulation(self, config, initial_frame):  
-        simulation = Simulation(config, initial_frame)
+    def nonvisual_simulation(self, simulation):  
         try:
             while not simulation.should_end():
                 simulation.generate_next_frame()

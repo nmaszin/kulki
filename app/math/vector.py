@@ -89,3 +89,16 @@ class Vector:
         """
         scale = 1 / abs(self)
         return self * scale
+
+    def serialize(self):
+        return {
+            'x': self.x,
+            'y': self.y
+        }
+    
+    @staticmethod
+    def deserialize(data):
+        return Vector(
+            data['x'],
+            data['y']
+        )

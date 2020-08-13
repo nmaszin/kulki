@@ -8,7 +8,7 @@ from app.simulation.simulation import Simulation
 from app.config import SimulationConfig
 from app.visualisation.frame import DrawableFrame
 from app.graphics.color import Color
-from app.simulation.file import FrameFile
+from app.simulation.file import SimulationFile
 
 class VisualisationWindow:
     WINDOW_TITLE = 'Kulki by N-Maszin'
@@ -17,14 +17,12 @@ class VisualisationWindow:
     running = False
     paused = False
 
-    def __init__(self, config, initial_frame):
-        self.config = config
-        self.initial_frame = initial_frame
+    def __init__(self, simulation):
+        self.simulation = simulation
         self.simulation_saved = False
         self.simulation_backward = False
 
         self.init_window()
-        self.init_simulation()
         self.init_timers()
 
     def init_window(self):
@@ -32,20 +30,17 @@ class VisualisationWindow:
         pygame.display.set_caption(self.WINDOW_TITLE)
         pygame.display.set_icon(pygame.image.load(self.WINDOW_ICON_PATH))
         self.surface = pygame.display.set_mode(
-            (self.config['width'], self.config['height']))
+            (self.simulation.config['width'], self.simulation.config['height']))
         self.surface.fill(Color.BACKGROUND)
         pygame.display.update()
-
-    def init_simulation(self):
-        self.simulation = Simulation(self.config, self.initial_frame)
 
     def init_timers(self):
         self.GENERATE_FRAME_EVENT = pygame.USEREVENT
         pygame.time.set_timer(self.GENERATE_FRAME_EVENT,
-                              int(1000 / self.config['engine_fps']))
+                              int(1000 / self.simulation.config['engine_fps']))
 
         self.RENDER_FRAME_EVENT = pygame.USEREVENT + 1
-        pygame.time.set_timer(self.RENDER_FRAME_EVENT, int(1000 / self.config['fps']))
+        pygame.time.set_timer(self.RENDER_FRAME_EVENT, int(1000 / self.simulation.config['fps']))
 
     def run(self):
         try:
@@ -68,7 +63,7 @@ class VisualisationWindow:
             elif event.key == pygame.K_p:
                 self.paused = not self.paused
             elif event.key == pygame.K_s and not self.simulation_saved:
-                FrameFile(FrameFile.generate_name()).write(self.initial_frame)
+                FrameFile(FrameFile.generate_name()).write(self.simulation.frames[0])
                 self.simulation_saved = True
                 print('Saved successfully')
             elif event.key == pygame.K_b:
@@ -80,7 +75,7 @@ class VisualisationWindow:
             def obtain_and_render_frame(obtainer):
                 self.surface.fill(Color.BACKGROUND)
                 frame = obtainer()
-                DrawableFrame(frame, self.config).draw(self.surface)
+                DrawableFrame(frame, self.simulation.config).draw(self.surface)
                 pygame.display.update()
 
             if self.simulation_backward and not self.simulation.at_first_frame():
@@ -88,7 +83,7 @@ class VisualisationWindow:
             elif not self.simulation_backward and not self.simulation.at_last_frame():
                 obtain_and_render_frame(self.simulation.go_to_next_frame)
             
-            if self.simulation.should_end() and self.config['exit_at_the_end_of_simulation']:
+            if self.simulation.should_end() and self.simulation.config['exit_at_the_end_of_simulation']:
                 self.running = False
 
         elif event.type == self.GENERATE_FRAME_EVENT and not self.simulation_backward and not self.simulation.should_end():

@@ -7,7 +7,7 @@ from datetime import datetime
 
 from app.simulation.simulation import Simulation
 from app.simulation.results import ResultsObtainer
-from app.config import JsonConfigFile, SimulationConfig
+from app.config import ConfigObtainer
 from app.simulation.generator import FrameGenerator
 
 class MultiSimulationCommand(climmands.Command):
@@ -18,7 +18,7 @@ class MultiSimulationCommand(climmands.Command):
         parser.add_argument('--config', help='Path to config file')
 
     def execute(self, parsed_arguments):
-        config = self.obtain_config(parsed_arguments)
+        config = ConfigObtainer(parsed_arguments.config).obtain()
         if 'simulation_max_frames' not in config:
             print('simulation_max_frames property not specified')
             return
@@ -39,15 +39,6 @@ class MultiSimulationCommand(climmands.Command):
 
         print(json.dumps(results))
 
-    def obtain_config(self, parsed_arguments):
-        config_path = parsed_arguments.config
-
-        if config_path is None:
-            custom_user_config = {}
-        else:
-            custom_user_config = JsonConfigFile(config_path).read()
-
-        return SimulationConfig(custom_user_config)
 
     def nonvisual_simulation(self, config, initial_frame):  
         simulation = Simulation(config, initial_frame)

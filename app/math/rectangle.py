@@ -33,3 +33,20 @@ class Rectangle:
 
     def bottom(self):
         return self.y + self.height
+
+    def serialize(self):
+        return {
+            'x': self.x,
+            'y': self.y,
+            'width': self.width,
+            'height': self.height
+        }
+    
+    @staticmethod
+    def deserialize(data):
+        return Rectangle(
+            data['x'],
+            data['y'],
+            data['width'],
+            data['height']
+        )

@@ -26,3 +26,16 @@ class Point:
     def __iter__(self):
         yield self.x
         yield self.y
+    
+    def serialize(self):
+        return {
+            'x': self.x,
+            'y': self.y
+        }
+
+    @staticmethod
+    def deserialize(data):
+        return Point(
+            data['x'],
+            data['y']
+        )

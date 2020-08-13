@@ -5,7 +5,7 @@ import climmands
 from datetime import datetime
 import matplotlib.pyplot as pyplot
 
-from app.config import SimulationConfig, JsonConfigFile
+from app.config import ConfigObtainer
 
 class PlotCommand(climmands.Command):
     name = 'plot'
@@ -15,7 +15,7 @@ class PlotCommand(climmands.Command):
         parser.add_argument('--config', help='Path to config file')
 
     def execute(self, parsed_arguments):
-        config = self.obtain_config(parsed_arguments)
+        config = ConfigObtainer(parsed_arguments.config).obtain()
         results = json.load(sys.stdin)
 
         transformed_results = {}
@@ -30,17 +30,6 @@ class PlotCommand(climmands.Command):
 
         for prop, data in transformed_results.items():
             self.plot(prop, 'N', prop, data['x'], data['y'])
-        
-    
-    def obtain_config(self, parsed_arguments):
-        config_path = parsed_arguments.config
-
-        if config_path is None:
-            custom_user_config = {}
-        else:
-            custom_user_config = JsonConfigFile(config_path).read()
-
-        return SimulationConfig(custom_user_config)
 
     def plot(self, title, legend_x, legend_y, x_values, y_values):
         pyplot.figure(num=title)

@@ -106,6 +106,26 @@ class Ball:
 
         return abs(displacement)
 
+    def serialize(self):
+        return {
+            'type': 'regular_ball',
+            'position': self.position.serialize(),
+            'radius': self.radius,
+            'velocity': self.velocity.serialize(),
+            'acceleration': self.acceleration.serialize(),
+            'collisions_precision': self.collisions_precision
+        }
+
+    @staticmethod
+    def deserialize(data):
+        return Ball(
+            Point.deserialize(data['position']),
+            data['radius'],
+            Vector.deserialize(data['velocity']),
+            Vector.deserialize(data['acceleration']),
+            data['collisions_precision']
+        )
+    
 
 class TrackedBall(Ball):
     TRACK_SIZE = 100
@@ -146,3 +166,19 @@ class TrackedBall(Ball):
             'collisions_counter': self.collisions_counter,
             'average_free_path': avg(self.free_paths)
         }
+
+    def serialize(self):
+        return {
+            **super().serialize(),
+            **{'type': 'tracked_ball'}
+        }
+
+    @staticmethod
+    def deserialize(data):
+        return TrackedBall(
+            Point.deserialize(data['position']),
+            data['radius'],
+            Vector.deserialize(data['velocity']),
+            Vector.deserialize(data['acceleration']),
+            data['collisions_precision']
+        )

@@ -1,5 +1,8 @@
 import copy
 
+from app.math.rectangle import Rectangle
+from app.simulation.ball import Ball, TrackedBall
+
 
 class SimulationFrame:
     def __init__(self, scene_rectangle, balls):
@@ -28,4 +31,24 @@ class SimulationFrame:
         return SimulationFrame(
             self.scene_rectangle,
             balls
+        )
+
+    def serialize(self):
+        return {
+            'scene': self.scene_rectangle.serialize(),
+            'balls': [ball.serialize() for ball in self.balls]
+        }
+    
+    @staticmethod
+    def deserialize(data):
+        deserialized_balls = []
+        for ball in data['balls']:
+            if ball['type'] == 'regular_ball':
+                deserialized_balls.append(Ball.deserialize(ball))
+            else:
+                deserialized_balls.append(TrackedBall.deserialize(ball))
+
+        return SimulationFrame(
+            Rectangle.deserialize(data['scene']),
+            deserialized_balls
         )

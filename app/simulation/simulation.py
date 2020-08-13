@@ -12,7 +12,6 @@ from app.config import SimulationConfig
 from app.graphics.color import Color
 
 from app.simulation.generator import FrameGenerator
-from app.simulation.file import FrameFile
 
 from app.list import DoubleLinkedList
 
@@ -27,6 +26,8 @@ class Simulation:
             0, 0, config['width'], config['height'])
 
         self.config = config
+        self.initial_frame = initial_frame
+
         self.frames = DoubleLinkedList.from_list([initial_frame])
         self.current_frame_iterator = self.frames.iterator_first()
         self.frames_counter = 0
@@ -56,3 +57,16 @@ class Simulation:
     def should_end(self):
         key = 'simulation_max_frames'
         return key in self.config and self.frames_counter >= self.config[key]
+    
+    def serialize(self):
+        return {
+            'config': self.config.serialize(),
+            'initial_frame': self.initial_frame.serialize()
+        }
+    
+    @staticmethod
+    def deserialize(data):
+        return Simulation(
+            SimulationConfig.deserialize(data['config']),
+            SimulationFrame.deserialize(data['initial_frame'])
+        )

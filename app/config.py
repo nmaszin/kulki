@@ -3,7 +3,7 @@ import random
 import json
 
 from app.math.vector import Vector
-
+from app.json_file import JsonFile
 
 class Config:
     def __init__(self, default, custom):
@@ -27,6 +27,7 @@ class Config:
 
     def all(self):
         return {**self.default, **self.custom}
+
 
 class SimulationConfig(Config):
     DEFAULTS = {
@@ -52,24 +53,22 @@ class SimulationConfig(Config):
     def __init__(self, config):
         super().__init__(self.DEFAULTS, config)
 
-class JsonConfigFileException(Exception):
-    pass
+    def serialize(self):
+        return self.custom
+    
+    @staticmethod
+    def deserialize(data):
+        return SimulationConfig(data)
 
-class JsonConfigFile:
-    def __init__(self, path):
+
+class ConfigObtainer:
+    def __init__(self, path=None):
         self.path = path
     
-    def read(self):
-        try:
-            with open(self.path, 'r') as f:
-                config = json.load(f)
-                return config
-        except IOError:
-            raise JsonConfigFileException(f'Error reading file {self.path}')
-
-    def write(self, config):
-        try:
-            with open(self.path, 'w') as f:
-                json.dump(config, f)
-        except IOError:
-            raise JsonConfigFileException(f'Error writing file {self.path}')
+    def obtain(self):
+        if self.path is None:
+            custom_config = {}
+        else:
+            custom_config = JsonFile(self.path).read()
+        
+        return SimulationConfig(custom_config)
