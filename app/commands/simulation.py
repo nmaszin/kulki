@@ -9,7 +9,7 @@ from app.simulation.file import FrameFile
 from app.config import SimulationConfig
 from app.simulation.generator import FrameGenerator
 from app.simulation.results import ResultsObtainer
-from app.config import YamlConfigFile, SimulationConfig
+from app.config import JsonConfigFile, SimulationConfig
 
 from app.math.vector import Vector
 
@@ -53,7 +53,7 @@ class SimulationCommand(climmands.Command):
         if config_path is None:
             custom_user_config = {}
         else:
-            custom_user_config = YamlConfigFile(config_path).read()
+            custom_user_config = JsonConfigFile(config_path).read()
 
         return SimulationConfig(custom_user_config)
 

@@ -1,6 +1,6 @@
 import math
 import random
-import yaml
+import json
 
 from app.math.vector import Vector
 
@@ -52,24 +52,24 @@ class SimulationConfig(Config):
     def __init__(self, config):
         super().__init__(self.DEFAULTS, config)
 
-class YamlConfigFileException(Exception):
+class JsonConfigFileException(Exception):
     pass
 
-class YamlConfigFile:
+class JsonConfigFile:
     def __init__(self, path):
         self.path = path
     
     def read(self):
         try:
             with open(self.path, 'r') as f:
-                config = yaml.safe_load(f.read())
+                config = json.load(f)
                 return config
         except IOError:
-            raise YamlConfigFileException(f'Error reading file {self.path}')
+            raise JsonConfigFileException(f'Error reading file {self.path}')
 
     def write(self, config):
         try:
             with open(self.path, 'w') as f:
-                yaml.dump(config, f)
+                json.dump(config, f)
         except IOError:
-            raise YamlConfigFileException(f'Error writing file {self.path}')
+            raise JsonConfigFileException(f'Error writing file {self.path}')

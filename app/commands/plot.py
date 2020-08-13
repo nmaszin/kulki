@@ -5,7 +5,7 @@ import climmands
 from datetime import datetime
 import matplotlib.pyplot as pyplot
 
-from app.config import SimulationConfig, YamlConfigFile
+from app.config import SimulationConfig, JsonConfigFile
 
 class PlotCommand(climmands.Command):
     name = 'plot'
@@ -38,7 +38,7 @@ class PlotCommand(climmands.Command):
         if config_path is None:
             custom_user_config = {}
         else:
-            custom_user_config = YamlConfigFile(config_path).read()
+            custom_user_config = JsonConfigFile(config_path).read()
 
         return SimulationConfig(custom_user_config)
 

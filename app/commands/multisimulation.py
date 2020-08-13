@@ -7,7 +7,7 @@ from datetime import datetime
 
 from app.simulation.simulation import Simulation
 from app.simulation.results import ResultsObtainer
-from app.config import YamlConfigFile, SimulationConfig
+from app.config import JsonConfigFile, SimulationConfig
 from app.simulation.generator import FrameGenerator
 
 class MultiSimulationCommand(climmands.Command):
@@ -45,7 +45,7 @@ class MultiSimulationCommand(climmands.Command):
         if config_path is None:
             custom_user_config = {}
         else:
-            custom_user_config = YamlConfigFile(config_path).read()
+            custom_user_config = JsonConfigFile(config_path).read()
 
         return SimulationConfig(custom_user_config)
 
