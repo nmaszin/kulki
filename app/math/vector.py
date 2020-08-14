@@ -1,5 +1,5 @@
 import math
-
+import random
 
 class Vector:
     def __init__(self, x, y):
@@ -102,3 +102,15 @@ class Vector:
             data['x'],
             data['y']
         )
+
+    @staticmethod
+    def generate(data):
+        min_angle, max_angle = data['angle']
+        min_value, max_value = data['value']
+
+        angle = random.randint(min_angle, max_angle)
+        value = random.randint(min_value, max_value)
+
+        print((value, angle))
+
+        return Vector.from_polar(value, angle)

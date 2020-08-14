@@ -1,6 +1,7 @@
 import math
 import random
 
+from app.math.vector import Vector
 from app.math.rectangle import Rectangle
 from app.simulation.frame import SimulationFrame
 from app.simulation.ball import Ball, TrackedBall
@@ -20,8 +21,8 @@ class FrameGenerator:
             balls.append(TrackedBall(
                 position=positions.pop(),
                 radius=self.config['balls_radius'],
-                velocity=self.config['tracked_balls_velocity'](),
-                acceleration=self.config['tracked_balls_acceleration'](),
+                velocity=Vector.generate(self.config['tracked_balls_velocity']),
+                acceleration=Vector.generate(self.config['tracked_balls_acceleration']),
                 collisions_precision=self.config['collisions_precision']
             ))
 
@@ -29,8 +30,8 @@ class FrameGenerator:
             balls.append(Ball(
                 position=positions.pop(),
                 radius=self.config['balls_radius'],
-                velocity=self.config['regular_balls_velocity'](),
-                acceleration=self.config['regular_balls_acceleration'](),
+                velocity=Vector.generate(self.config['regular_balls_velocity']),
+                acceleration=Vector.generate(self.config['regular_balls_acceleration']),
                 collisions_precision=self.config['collisions_precision']
             ))
 
