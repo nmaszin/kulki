@@ -1,6 +1,7 @@
 from app.list import DoubleLinkedList
 from unittest import TestCase
 
+
 class TestDoubleLinkedList(TestCase):
     def test_push_last_one_element(self):
         l = DoubleLinkedList()
@@ -15,7 +16,7 @@ class TestDoubleLinkedList(TestCase):
         l.push_last(3)
 
         self.assertEqual(list(l), [1, 2, 3])
-    
+
     def test_push_first_one_element(self):
         l = DoubleLinkedList()
         l.push_first(1)
@@ -40,7 +41,7 @@ class TestDoubleLinkedList(TestCase):
         l.pop_last()
 
         self.assertEqual(list(l), [1, 2, 3, 4])
-    
+
     def test_pop_last_few_elements(self):
         l = DoubleLinkedList().from_list([1, 2, 3, 4, 5])
         l.pop_last()
@@ -54,7 +55,7 @@ class TestDoubleLinkedList(TestCase):
         l.pop_first()
 
         self.assertEqual(list(l), [2, 3, 4, 5])
-    
+
     def test_pop_first_few_elements(self):
         l = DoubleLinkedList().from_list([1, 2, 3, 4, 5])
         l.pop_first()
@@ -65,24 +66,24 @@ class TestDoubleLinkedList(TestCase):
 
     def test_reverse(self):
         l = DoubleLinkedList.from_list([1, 2, 3, 4, 5])
-        
+
         self.assertEqual(list(reversed(l)), [5, 4, 3, 2, 1])
-    
+
     def test_non_empty(self):
         l = DoubleLinkedList.from_list([1, 2, 3, 4, 5])
 
         self.assertFalse(l.empty())
-    
+
     def test_empty(self):
         l = DoubleLinkedList()
 
         self.assertTrue(l.empty())
-    
+
     def test_0_len(self):
         l = DoubleLinkedList()
 
         self.assertEqual(len(l), 0)
-    
+
     def test_5_len(self):
         l = DoubleLinkedList.from_list([1, 2, 3, 4, 5])
 
@@ -98,4 +99,3 @@ class TestDoubleLinkedList(TestCase):
             it = it.next
 
         self.assertEqual(accumulator, [1, 2, 3, 4, 5])
-        

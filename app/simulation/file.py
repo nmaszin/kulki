@@ -4,13 +4,14 @@ from datetime import datetime
 from app.json_file import JsonFile
 from app.simulation.simulation import Simulation
 
+
 class SimulationFile:
     def __init__(self, path):
         self.path = path
 
     def read(self):
         return Simulation.deserialize(JsonFile(self.path).read())
-            
+
     def write(self, simulation):
         JsonFile(self.path).write(simulation.serialize())
 

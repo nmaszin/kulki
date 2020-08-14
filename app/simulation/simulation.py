@@ -48,20 +48,20 @@ class Simulation:
     def go_to_previous_frame(self):
         self.current_frame_iterator = self.current_frame_iterator.previous
         return self.current_frame_iterator.next.value
-    
+
     def current_frame(self):
         return self.current_frame_iterator.value
 
     def should_end(self):
         key = 'simulation_max_frames'
         return key in self.config and self.frames_counter >= self.config[key]
-    
+
     def serialize(self):
         return {
             'config': self.config.serialize(),
             'initial_frame': self.initial_frame.serialize()
         }
-    
+
     @staticmethod
     def deserialize(data):
         return Simulation(

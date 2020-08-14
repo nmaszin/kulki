@@ -10,6 +10,7 @@ from app.simulation.file import SimulationFile
 from app.graphics.color import Color
 from app.visualisation.frame import DrawableFrame
 
+
 class VisualisationWindow:
     WINDOW_TITLE = 'Kulki by N-Maszin'
     WINDOW_ICON_PATH = 'assets/icon.png'
@@ -40,7 +41,8 @@ class VisualisationWindow:
                               int(1000 / self.simulation.config['engine_fps']))
 
         self.RENDER_FRAME_EVENT = pygame.USEREVENT + 1
-        pygame.time.set_timer(self.RENDER_FRAME_EVENT, int(1000 / self.simulation.config['fps']))
+        pygame.time.set_timer(self.RENDER_FRAME_EVENT, int(
+            1000 / self.simulation.config['fps']))
 
     def run(self):
         try:
@@ -63,7 +65,8 @@ class VisualisationWindow:
             elif event.key == pygame.K_p:
                 self.paused = not self.paused
             elif event.key == pygame.K_s and not self.simulation_saved:
-                SimulationFile(SimulationFile.generate_name()).write(self.simulation)
+                SimulationFile(SimulationFile.generate_name()
+                               ).write(self.simulation)
                 self.simulation_saved = True
                 print('Saved successfully')
             elif event.key == pygame.K_b:
@@ -82,9 +85,10 @@ class VisualisationWindow:
                 obtain_and_render_frame(self.simulation.go_to_previous_frame)
             elif not self.simulation_backward and not self.simulation.at_last_frame():
                 obtain_and_render_frame(self.simulation.go_to_next_frame)
-            
+
             if self.simulation.should_end() and self.simulation.config['exit_at_the_end_of_simulation']:
                 self.running = False
 
         elif event.type == self.GENERATE_FRAME_EVENT and not self.simulation_backward and not self.simulation.should_end():
-            threading.Thread(target=self.simulation.generate_next_frame).start()
+            threading.Thread(
+                target=self.simulation.generate_next_frame).start()

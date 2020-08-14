@@ -41,7 +41,7 @@ class Rectangle:
             'width': self.width,
             'height': self.height
         }
-    
+
     @staticmethod
     def deserialize(data):
         return Rectangle(

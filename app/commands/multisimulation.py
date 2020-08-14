@@ -11,6 +11,7 @@ from app.simulation.simulation import Simulation
 from app.simulation.results import ResultsObtainer
 from app.simulation.generator import FrameGenerator
 
+
 class MultiSimulationCommand(climmands.Command):
     name = 'multisimulation'
     description = 'Perform multiple simulations for different balls number'
@@ -41,7 +42,7 @@ class MultiSimulationCommand(climmands.Command):
 
         JsonFile(parsed_arguments.results).write(results)
 
-    def nonvisual_simulation(self, config, initial_frame):  
+    def nonvisual_simulation(self, config, initial_frame):
         simulation = Simulation(config, initial_frame)
         while not simulation.should_end():
             simulation.generate_next_frame()

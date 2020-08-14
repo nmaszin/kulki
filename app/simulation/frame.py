@@ -38,7 +38,7 @@ class SimulationFrame:
             'scene': self.scene_rectangle.serialize(),
             'balls': [ball.serialize() for ball in self.balls]
         }
-    
+
     @staticmethod
     def deserialize(data):
         deserialized_balls = []

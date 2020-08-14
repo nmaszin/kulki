@@ -25,6 +25,7 @@ class DrawableTrackedBall(DrawableBall):
 
     def draw(self, surface):
         for position in self.ball.previous_positions:
-            Circle(position, self.track_dot_radius, self.track_color).draw(surface)
+            Circle(position, self.track_dot_radius,
+                   self.track_color).draw(surface)
 
         super().draw(surface)

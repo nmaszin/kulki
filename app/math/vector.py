@@ -95,7 +95,7 @@ class Vector:
             'x': self.x,
             'y': self.y
         }
-    
+
     @staticmethod
     def deserialize(data):
         return Vector(

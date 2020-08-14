@@ -125,7 +125,7 @@ class Ball:
             Vector.deserialize(data['acceleration']),
             data['collisions_precision']
         )
-    
+
 
 class TrackedBall(Ball):
     TRACK_SIZE = 100
@@ -159,9 +159,9 @@ class TrackedBall(Ball):
 
         self.free_paths.append(self.current_free_path)
         self.current_free_path = 0
-    
+
     def statistics(self):
-        avg = lambda x: sum(x) / len(x)
+        def avg(x): return sum(x) / len(x)
         return {
             'collisions_counter': self.collisions_counter,
             'average_free_path': avg(self.free_paths)

@@ -3,30 +3,35 @@ class DoubleLinkedListNode:
         self.value = value
         self.previous = previous
         self.next = next
-    
+
     def has_next(self):
         return self.next is not None
-    
+
     def has_previous(self):
         return self.previous is not None
+
 
 class DoubleLinkedList:
     def __init__(self):
         self.first_node = None
         self.last_node = None
-    
+
     def push_first(self, value):
         if self.first_node is None:
-            self.first_node = self.last_node = DoubleLinkedListNode(value, None, None)
+            self.first_node = self.last_node = DoubleLinkedListNode(
+                value, None, None)
         else:
-            self.first_node = DoubleLinkedListNode(value, None, self.first_node)
+            self.first_node = DoubleLinkedListNode(
+                value, None, self.first_node)
             self.first_node.next.previous = self.first_node
 
     def push_last(self, value):
         if self.first_node is None:
-            self.first_node = self.last_node = DoubleLinkedListNode(value, None, None)
+            self.first_node = self.last_node = DoubleLinkedListNode(
+                value, None, None)
         else:
-            self.last_node.next = DoubleLinkedListNode(value, self.last_node, None)
+            self.last_node.next = DoubleLinkedListNode(
+                value, self.last_node, None)
             self.last_node = self.last_node.next
 
     def pop_first(self):
@@ -65,7 +70,7 @@ class DoubleLinkedList:
 
     def iterator_first(self):
         return self.first_node
-    
+
     def iterator_last(self):
         return self.last_node
 
@@ -101,5 +106,5 @@ class DoubleLinkedList:
         l = DoubleLinkedList()
         for element in data:
             l.push_last(element)
-        
+
         return l

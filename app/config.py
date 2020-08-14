@@ -5,6 +5,7 @@ import json
 from app.math.vector import Vector
 from app.json_file import JsonFile
 
+
 class Config:
     def __init__(self, default, custom):
         self.default = default
@@ -55,7 +56,7 @@ class SimulationConfig(Config):
 
     def serialize(self):
         return self.custom
-    
+
     @staticmethod
     def deserialize(data):
         return SimulationConfig(data)
@@ -64,11 +65,11 @@ class SimulationConfig(Config):
 class ConfigObtainer:
     def __init__(self, path=None):
         self.path = path
-    
+
     def obtain(self):
         if self.path is None:
             custom_config = {}
         else:
             custom_config = JsonFile(self.path).read()
-        
+
         return SimulationConfig(custom_config)

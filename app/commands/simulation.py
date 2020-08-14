@@ -11,34 +11,38 @@ from app.simulation.results import ResultsObtainer
 from app.visualisation.window import VisualisationWindow
 from app.math.vector import Vector
 
+
 class SimulationCommand(climmands.Command):
     name = 'simulation'
     description = 'Run a simulation'
 
     def initialize_arguments_parser(self, parser):
         parser.add_argument('--config', help='Path to config file')
-        parser.add_argument('--visual', action='store_true', help='Render simulation\'s visualisation')
-        parser.add_argument('--json', action='store_true', help='Print results as json')
+        parser.add_argument('--visual', action='store_true',
+                            help='Render simulation\'s visualisation')
+        parser.add_argument('--json', action='store_true',
+                            help='Print results as json')
 
         subparsers = parser.add_subparsers(dest='action')
-        
-        save_parser = subparsers.add_parser('save', help='Save simulation to file')
+
+        save_parser = subparsers.add_parser(
+            'save', help='Save simulation to file')
         save_parser.add_argument('file', nargs='?', help='Simulation file')
 
         load_parser = subparsers.add_parser('load', help='Load demo from file')
         load_parser.add_argument('file', help='Simulation file')
 
     def execute(self, parsed_arguments):
-        simulation = self.obtain_simulation(parsed_arguments)    
+        simulation = self.obtain_simulation(parsed_arguments)
         self.save_simulation_if_specified(parsed_arguments, simulation)
-        last_frame = self.perform_simulation(simulation, parsed_arguments.visual)
+        last_frame = self.perform_simulation(
+            simulation, parsed_arguments.visual)
         self.print_statistics(parsed_arguments.json, last_frame)
-
 
     def obtain_simulation(self, parsed_arguments):
         if parsed_arguments.action == 'load':
             return SimulationFile(parsed_arguments.file).read()
-    
+
         config = ConfigObtainer(parsed_arguments.config).obtain()
         initial_frame = FrameGenerator(config).generate()
         return Simulation(config, initial_frame)
@@ -53,7 +57,7 @@ class SimulationCommand(climmands.Command):
         else:
             return self.nonvisual_simulation(simulation)
 
-    def nonvisual_simulation(self, simulation):  
+    def nonvisual_simulation(self, simulation):
         try:
             while not simulation.should_end():
                 simulation.generate_next_frame()

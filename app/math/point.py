@@ -27,7 +27,7 @@ class Point:
     def __iter__(self):
         yield self.x
         yield self.y
-    
+
     def serialize(self):
         return {
             'x': self.x,

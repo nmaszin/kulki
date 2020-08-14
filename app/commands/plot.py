@@ -7,6 +7,7 @@ import matplotlib.pyplot as pyplot
 
 from app.json_file import JsonFile
 
+
 class PlotCommand(climmands.Command):
     name = 'plot'
     description = 'Plot results'
@@ -19,11 +20,11 @@ class PlotCommand(climmands.Command):
 
         transformed_results = {}
         for x_value, stats in results.items():
-            stats = stats[0] # We handle only the first tracked ball
+            stats = stats[0]  # We handle only the first tracked ball
             for prop, y_value in stats.items():
                 if prop not in transformed_results:
                     transformed_results[prop] = {'x': [], 'y': []}
-                
+
                 transformed_results[prop]['x'].append(x_value)
                 transformed_results[prop]['y'].append(y_value)
 
