@@ -1,7 +1,6 @@
 from app.graphics.color import Color
 from app.graphics.circle import Circle
 
-
 class DrawableBall:
     def __init__(self, ball, color):
         self.ball = ball
@@ -24,8 +23,11 @@ class DrawableTrackedBall(DrawableBall):
         self.track_dot_radius = track_dot_radius
 
     def draw(self, surface):
-        for position in self.ball.previous_positions:
+        for index, position in enumerate(self.ball.previous_positions):
+            weight = index / len(self.ball.previous_positions)
+            color = Color.mix(weight, self.track_color, Color.BACKGROUND)
+
             Circle(position, self.track_dot_radius,
-                   self.track_color).draw(surface)
+                   color).draw(surface)
 
         super().draw(surface)
