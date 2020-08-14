@@ -75,18 +75,22 @@ Symulację można również przewijać do przodu oraz do tyłu. W tym celu słu�
 
 Poniższa tabela zawiera wykaz wszystkich opcji konfiguracji, wraz z ich opisem oraz wartościami domyślnymi.
 
-| Identyfikator opcji                     | Opis opcji                                                   | Wartość domyślna |
-| --------------------------------------- | ------------------------------------------------------------ | ---------------- |
-| `width`                                 | Szerokość zbiornika stosowanego w symulacji i zarazem szerokość okna wizualizacji (w pikselach) | `600`            |
-| `height`                                | Wysokość zbiornika stosowanego w symulacji i zarazem wysokość okna wizualizacji (w pikselach) | `600`            |
-| `fps`                                   | Liczba klatek na sekundę, renderowanych w oknie wizualizacji - im większa jest ta wartość, tym szybciej będzie prezentowała się symulacja | `60`             |
-| `engine_fps`                            | Liczba klatek na sekundę, jako jednostkę czasu w symulacji - im większa jest ta wartość, tym dokładniejsza będzie symulacja | `60`             |
-| `collisions_precision`                  | Precyzja kolizji - oznacza odległość pomiędzy krawędziami obiektów (kulka lub ściana), przy której ma wystąpić kolizja. | `1`              |
-| `balls_radius`                          | Rozmiar kulek (promień)                                      | `10`             |
-| `track_dots_radius`                     | Rozmiar kropek, wchodzących w skład śladu, jaki pozostawia za sobą kulka śledzona. | `2`              |
-| `regular_balls_number`                  | Liczba zwykłych atomów (czerwonych, nieśledzonych) uczestniczących w symulacji | `10`             |
-| `tracked_balls_number`                  | Liczba atomów śledzonych (niebieskich) uczestniczących w symulacji | `1`              |
-| `simulation_max_frames`                 | Czas trwania symulacji, wyrażony w klatkach. Jeżeli opcja nie jest ustawiona, symulacja trwa w nieskończoność |                  |
-| `exit_at_the_end_of_simulation`         | Jeżeli opcja ustawiona jest na `true`, po zakończeniu symulacji, okno wizualizacji się automatycznie zamyka. W przeciwnym wypadku, czeka na reakcję użytkownika. | `true`           |
-| `multisimulation_balls_number_sequence` | Trzyelementowa lista, określająca liczbę atomów w poszczególnych symulacjach, uruchamianych w trybie wsadowym przez komendę `multisimulation`. Pierwszym elementem jest liczba początkowa, w drugiej jest krok (przyrost), a w trzeciej - całkowita liczba symulacji. |                  |
+| Identyfikator opcji                     | Opis opcji                                                   | Wartość domyślna                         |
+| --------------------------------------- | ------------------------------------------------------------ | ---------------------------------------- |
+| `width`                                 | Szerokość zbiornika stosowanego w symulacji i zarazem szerokość okna wizualizacji (w pikselach) | `600`                                    |
+| `height`                                | Wysokość zbiornika stosowanego w symulacji i zarazem wysokość okna wizualizacji (w pikselach) | `600`                                    |
+| `fps`                                   | Liczba klatek na sekundę, renderowanych w oknie wizualizacji - im większa jest ta wartość, tym szybciej będzie prezentowała się symulacja | `60`                                     |
+| `engine_fps`                            | Liczba klatek na sekundę, jako jednostkę czasu w symulacji - im większa jest ta wartość, tym dokładniejsza będzie symulacja | `60`                                     |
+| `collisions_precision`                  | Precyzja kolizji - oznacza odległość pomiędzy krawędziami obiektów (kulka lub ściana), przy której ma wystąpić kolizja. | `1`                                      |
+| `balls_radius`                          | Rozmiar kulek (promień)                                      | `10`                                     |
+| `track_dots_radius`                     | Rozmiar kropek, wchodzących w skład śladu, jaki pozostawia za sobą kulka śledzona. | `2`                                      |
+| `regular_balls_number`                  | Liczba zwykłych atomów (czerwonych, nieśledzonych) uczestniczących w symulacji | `10`                                     |
+| `tracked_balls_number`                  | Liczba atomów śledzonych (niebieskich) uczestniczących w symulacji | `1`                                      |
+| `simulation_max_frames`                 | Czas trwania symulacji, wyrażony w klatkach. Jeżeli opcja nie jest ustawiona, symulacja trwa w nieskończoność |                                          |
+| `exit_at_the_end_of_simulation`         | Jeżeli opcja ustawiona jest na `true`, po zakończeniu symulacji, okno wizualizacji się automatycznie zamyka. W przeciwnym wypadku, czeka na reakcję użytkownika. | `true`                                   |
+| `multisimulation_balls_number_sequence` | Trzyelementowa lista, określająca liczbę atomów w poszczególnych symulacjach, uruchamianych w trybie wsadowym przez komendę `multisimulation`. Pierwszym elementem jest liczba początkowa, w drugiej jest krok (przyrost), a w trzeciej - całkowita liczba symulacji. |                                          |
+| `regular_balls_velocity`                | Prędkość zwykłych kulek (czerwonych). Jest determinowana przez obiekt określający parametry generatora wektorów. Zawiera dwa pola: *angle* (oznaczające kąt) oraz *value* (oznaczające wartość). Każde z nich jest dwuelementową tablicą, oznaczającą przedział obustronnie domknięty, z jakiego zostanie wylosowana. | `{"angle": [0, 360], "value": [0, 500]}` |
+| `regular_balls_acceleration`            | Przyspieszenie zwykłych kulek (czerwonych). Składnia identyczna, jak w przypadku `regular_balls_velocity`. | `{"angle": [0, 0], "value": [0, 0]}`     |
+| `tracked_balls_velocity`                | Prędkość kulek śledzonych (niebieskich). Składnia identyczna, jak w przypadku `regular_balls_velocity`. | `{"angle": [0, 360], "value": [0, 500]}` |
+| `tracked_balls_acceleration`            | Przyspieszenie kulek śledzonych (niebieskich). Składnia identyczna, jak w przypadku `regular_balls_velocity`. | `{"angle": [0, 0], "value": [0, 0]}`     |
 
