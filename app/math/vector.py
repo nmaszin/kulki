@@ -111,6 +111,4 @@ class Vector:
         angle = random.randint(min_angle, max_angle)
         value = random.randint(min_value, max_value)
 
-        print((value, angle))
-
         return Vector.from_polar(value, angle)

@@ -20,6 +20,8 @@ class Ball:
         self.acceleration = acceleration
         self.collisions_precision = collisions_precision
 
+        self.balls_collided_at_last_frame = []
+
     def __eq__(self, other):
         return self.position == other.position and self.velocity == other.velocity and self.radius == other.radius
 
@@ -28,7 +30,9 @@ class Ball:
         Returns True if collision between two balls has ocurred
         """
         distance = self.position.distance(ball.position)
-        return distance <= self.radius + ball.radius + self.collisions_precision
+        collision_detected = distance <= self.radius + ball.radius + self.collisions_precision
+        can_handle_collision = ball not in self.balls_collided_at_last_frame
+        return collision_detected and can_handle_collision
 
     def is_collision_with_wall(self, scene_rectangle):
         """
@@ -42,6 +46,8 @@ class Ball:
         Handle ball bouncing off of another ball
         Does not return anything
         """
+        self.balls_collided_at_last_frame.append(ball)
+
         vector_between_centers = Vector(
             ball.position.x - self.position.x,
             ball.position.y - self.position.y
@@ -70,14 +76,14 @@ class Ball:
         """
         possible_centers = self.ball_possible_centers(scene_rectangle)
 
-        if self.position.x < possible_centers.left():
+        if self.position.x < possible_centers.left() and self.velocity.x < 0:
             self.velocity.x *= -1
-        elif self.position.x > possible_centers.right():
+        elif self.position.x > possible_centers.right() and self.velocity.x > 0:
             self.velocity.x *= -1
 
-        if self.position.y < possible_centers.top():
+        if self.position.y < possible_centers.top() and self.velocity.y < 0:
             self.velocity.y *= -1
-        elif self.position.y > possible_centers.bottom():
+        elif self.position.y > possible_centers.bottom() and self.velocity.y > 0:
             self.velocity.y *= -1
 
     def ball_possible_centers(self, scene_rectangle):
@@ -103,6 +109,8 @@ class Ball:
 
         displacement = self.velocity * time_delta
         self.position = self.position.translate(displacement)
+
+        self.balls_collided_at_last_frame = []
 
         return abs(displacement)
 
