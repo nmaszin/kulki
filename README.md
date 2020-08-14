@@ -45,7 +45,7 @@ Plik config.json
 ```json
 {
     "simulation_max_frames": 3000,
-	"multisimulation_balls_number_sequence": [10, 10, 10]
+    "multisimulation_balls_number_sequence": [10, 10, 10]
 }
 ```
 
