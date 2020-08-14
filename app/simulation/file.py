@@ -1,8 +1,8 @@
 import json
 from datetime import datetime
 
-from app.simulation.simulation import Simulation
 from app.json_file import JsonFile
+from app.simulation.simulation import Simulation
 
 class SimulationFile:
     def __init__(self, path):

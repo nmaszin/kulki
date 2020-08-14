@@ -3,17 +3,15 @@ import random
 from datetime import datetime
 from collections import deque
 
+from app.list import DoubleLinkedList
+from app.config import SimulationConfig
 from app.math.point import Point
 from app.math.rectangle import Rectangle
 from app.math.vector import Vector
 from app.simulation.ball import Ball, TrackedBall
 from app.simulation.frame import SimulationFrame
-from app.config import SimulationConfig
-from app.graphics.color import Color
-
 from app.simulation.generator import FrameGenerator
-
-from app.list import DoubleLinkedList
+from app.graphics.color import Color
 
 
 class Simulation:

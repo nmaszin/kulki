@@ -2,13 +2,13 @@ import pygame
 import random
 import threading
 
+from app.config import SimulationConfig
 from app.math.rectangle import Rectangle
 from app.math.vector import Vector
 from app.simulation.simulation import Simulation
-from app.config import SimulationConfig
-from app.visualisation.frame import DrawableFrame
-from app.graphics.color import Color
 from app.simulation.file import SimulationFile
+from app.graphics.color import Color
+from app.visualisation.frame import DrawableFrame
 
 class VisualisationWindow:
     WINDOW_TITLE = 'Kulki by N-Maszin'

@@ -1,5 +1,6 @@
 import math
 import random
+
 from app.math.vector import Vector
 
 

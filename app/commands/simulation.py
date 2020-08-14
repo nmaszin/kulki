@@ -3,14 +3,12 @@ import json
 import climmands
 from datetime import datetime
 
+from app.config import ConfigObtainer
 from app.simulation.simulation import Simulation
-from app.visualisation.window import VisualisationWindow
 from app.simulation.file import SimulationFile
-from app.config import SimulationConfig
 from app.simulation.generator import FrameGenerator
 from app.simulation.results import ResultsObtainer
-from app.config import ConfigObtainer
-
+from app.visualisation.window import VisualisationWindow
 from app.math.vector import Vector
 
 class SimulationCommand(climmands.Command):

@@ -5,11 +5,11 @@ import json
 import climmands
 from datetime import datetime
 
+from app.json_file import JsonFile
+from app.config import ConfigObtainer
 from app.simulation.simulation import Simulation
 from app.simulation.results import ResultsObtainer
-from app.config import ConfigObtainer
 from app.simulation.generator import FrameGenerator
-from app.json_file import JsonFile
 
 class MultiSimulationCommand(climmands.Command):
     name = 'multisimulation'
