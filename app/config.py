@@ -34,6 +34,7 @@ class SimulationConfig(Config):
     DEFAULTS = {
         'width': 600,
         'height': 600,
+        'fullscreen': False,
         'fps': 60,
         'engine_fps': 60,
         'exit_at_the_end_of_simulation': True,

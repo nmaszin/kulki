@@ -79,6 +79,7 @@ Poniższa tabela zawiera wykaz wszystkich opcji konfiguracji, wraz z ich opisem 
 | --------------------------------------- | ------------------------------------------------------------ | ---------------------------------------- |
 | `width`                                 | Szerokość zbiornika stosowanego w symulacji i zarazem szerokość okna wizualizacji (w pikselach) | `600`                                    |
 | `height`                                | Wysokość zbiornika stosowanego w symulacji i zarazem wysokość okna wizualizacji (w pikselach) | `600`                                    |
+| `fullscreen`                            | Jeżeli ustawione na `true`, program zostanie uruchomiony w trybie pełnoekranowym. W przeciwnym wypadku, będzie to zwyczajne okno z belką tytułową. | `false`                                  |
 | `fps`                                   | Liczba klatek na sekundę, renderowanych w oknie wizualizacji - im większa jest ta wartość, tym szybciej będzie prezentowała się symulacja | `60`                                     |
 | `engine_fps`                            | Liczba klatek na sekundę, jako jednostkę czasu w symulacji - im większa jest ta wartość, tym dokładniejsza będzie symulacja | `60`                                     |
 | `collisions_precision`                  | Precyzja kolizji - oznacza odległość pomiędzy krawędziami obiektów (kulka lub ściana), przy której ma wystąpić kolizja. | `1`                                      |
