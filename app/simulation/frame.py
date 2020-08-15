@@ -17,9 +17,14 @@ class SimulationFrame:
         balls = copy.deepcopy(self.balls)
 
         for ballIndex, ball in enumerate(balls):
-            for other in balls[ballIndex + 1:]:
+            for otherIndex, other in enumerate(balls[ballIndex + 1:]):
                 if ball.is_collision_with_ball(other):
-                    ball.bounce_off_of_ball(other)
+                    if not ball.has_ball_collided_at_last_frame(otherIndex):
+                        ball.bounce_off_of_ball(other)
+                        ball.register_ball_collided(otherIndex)
+                elif ball.has_ball_collided_at_last_frame(otherIndex):
+                    ball.unregister_ball_collided(otherIndex)
+
 
         for ball in balls:
             if ball.is_collision_with_wall(self.scene_rectangle):

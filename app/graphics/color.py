@@ -5,7 +5,7 @@ class Color:
     BACKGROUND = (20, 20, 20)
     BALL = (240, 0, 0)
     TRACKED_BALL = (100, 100, 240)
-    BOUNCED_BALL = (240, 100, 100)
+    BOUNCED_BALL = (100, 240, 100)
     TRACK = (14, 163, 54)
 
     @staticmethod

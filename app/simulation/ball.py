@@ -30,9 +30,7 @@ class Ball:
         Returns True if collision between two balls has ocurred
         """
         distance = self.position.distance(ball.position)
-        collision_detected = distance <= self.radius + ball.radius + self.collisions_precision
-        can_handle_collision = ball not in self.balls_collided_at_last_frame
-        return collision_detected and can_handle_collision
+        return distance <= self.radius + ball.radius + self.collisions_precision
 
     def is_collision_with_wall(self, scene_rectangle):
         """
@@ -41,12 +39,20 @@ class Ball:
         """
         return not self.ball_possible_centers(scene_rectangle).contains(self.position)
 
+    def register_ball_collided(self, ballIndex):
+        self.balls_collided_at_last_frame.append(ballIndex)
+
+    def unregister_ball_collided(self, ballIndex):
+        self.balls_collided_at_last_frame.remove(ballIndex)
+
+    def has_ball_collided_at_last_frame(self, ballIndex):
+        return ballIndex in self.balls_collided_at_last_frame
+
     def bounce_off_of_ball(self, ball):
         """
         Handle ball bouncing off of another ball
         Does not return anything
         """
-        self.balls_collided_at_last_frame.append(ball)
 
         vector_between_centers = Vector(
             ball.position.x - self.position.x,
@@ -109,8 +115,6 @@ class Ball:
 
         displacement = self.velocity * time_delta
         self.position = self.position.translate(displacement)
-
-        self.balls_collided_at_last_frame = []
 
         return abs(displacement)
 

@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
-from app.commands import *
+
 import climmands
 import argparse
 import signal
 import os
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 'hide'
+
+from app.commands import *
 
 signal.signal(signal.SIGINT, signal.default_int_handler)
 
