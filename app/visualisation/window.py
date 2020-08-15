@@ -30,8 +30,16 @@ class VisualisationWindow:
         pygame.init()
         pygame.display.set_caption(self.WINDOW_TITLE)
         pygame.display.set_icon(pygame.image.load(self.WINDOW_ICON_PATH))
+
+        display_flags = 0
+        if self.simulation.config['fullscreen']:
+            display_flags |= pygame.FULLSCREEN
+
         self.surface = pygame.display.set_mode(
-            (self.simulation.config['width'], self.simulation.config['height']))
+            (self.simulation.config['width'], self.simulation.config['height']),
+            display_flags
+        )
+
         self.surface.fill(Color.BACKGROUND)
         pygame.display.update()
 
