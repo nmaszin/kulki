@@ -1,5 +1,4 @@
 import sys
-import yaml
 import json
 import climmands
 from datetime import datetime
