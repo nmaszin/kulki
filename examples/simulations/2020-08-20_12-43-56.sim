@@ -1,0 +1,200 @@
+{
+    "config": {},
+    "initial_frame": {
+        "scene": {
+            "x": 0,
+            "y": 0,
+            "width": 600,
+            "height": 600
+        },
+        "balls": [
+            {
+                "type": "tracked_ball",
+                "position": {
+                    "x": 20,
+                    "y": 20
+                },
+                "radius": 10,
+                "velocity": {
+                    "x": 440.5273529318921,
+                    "y": 132.4222463139036
+                },
+                "acceleration": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "collisions_precision": 1
+            },
+            {
+                "type": "regular_ball",
+                "position": {
+                    "x": 54,
+                    "y": 54
+                },
+                "radius": 10,
+                "velocity": {
+                    "x": -29.0849967971543,
+                    "y": -24.45532582709795
+                },
+                "acceleration": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "collisions_precision": 1
+            },
+            {
+                "type": "regular_ball",
+                "position": {
+                    "x": 528,
+                    "y": 578
+                },
+                "radius": 10,
+                "velocity": {
+                    "x": 486.8115807633872,
+                    "y": -104.96897081829538
+                },
+                "acceleration": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "collisions_precision": 1
+            },
+            {
+                "type": "regular_ball",
+                "position": {
+                    "x": 389,
+                    "y": 417
+                },
+                "radius": 10,
+                "velocity": {
+                    "x": 484.2578909100778,
+                    "y": 60.3182815680551
+                },
+                "acceleration": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "collisions_precision": 1
+            },
+            {
+                "type": "regular_ball",
+                "position": {
+                    "x": 414,
+                    "y": 480
+                },
+                "radius": 10,
+                "velocity": {
+                    "x": -187.89920711807025,
+                    "y": -401.1768786513008
+                },
+                "acceleration": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "collisions_precision": 1
+            },
+            {
+                "type": "regular_ball",
+                "position": {
+                    "x": 70,
+                    "y": 420
+                },
+                "radius": 10,
+                "velocity": {
+                    "x": -94.84762039874126,
+                    "y": 70.19920871844839
+                },
+                "acceleration": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "collisions_precision": 1
+            },
+            {
+                "type": "regular_ball",
+                "position": {
+                    "x": 254,
+                    "y": 514
+                },
+                "radius": 10,
+                "velocity": {
+                    "x": -107.11217891438099,
+                    "y": -400.93887455348306
+                },
+                "acceleration": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "collisions_precision": 1
+            },
+            {
+                "type": "regular_ball",
+                "position": {
+                    "x": 524,
+                    "y": 362
+                },
+                "radius": 10,
+                "velocity": {
+                    "x": -64.82615863013592,
+                    "y": -307.2353644313435
+                },
+                "acceleration": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "collisions_precision": 1
+            },
+            {
+                "type": "regular_ball",
+                "position": {
+                    "x": 202,
+                    "y": 416
+                },
+                "radius": 10,
+                "velocity": {
+                    "x": 39.329444698110365,
+                    "y": 327.64797386789724
+                },
+                "acceleration": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "collisions_precision": 1
+            },
+            {
+                "type": "regular_ball",
+                "position": {
+                    "x": 109,
+                    "y": 471
+                },
+                "radius": 10,
+                "velocity": {
+                    "x": -463.5071884765182,
+                    "y": -139.3452052658916
+                },
+                "acceleration": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "collisions_precision": 1
+            },
+            {
+                "type": "regular_ball",
+                "position": {
+                    "x": 175,
+                    "y": 210
+                },
+                "radius": 10,
+                "velocity": {
+                    "x": -82.92513261023835,
+                    "y": -475.82814374685154
+                },
+                "acceleration": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "collisions_precision": 1
+            }
+        ]
+    }
+}
