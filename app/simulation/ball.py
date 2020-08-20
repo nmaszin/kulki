@@ -173,7 +173,12 @@ class TrackedBall(Ball):
         self.current_free_path = 0
 
     def statistics(self):
-        def avg(x): return sum(x) / len(x)
+        def avg(x):
+            try:
+                return sum(x) / len(x)
+            except ZeroDivisionError:
+                pass
+
         return {
             'collisions_counter': self.collisions_counter,
             'average_free_path': avg(self.free_paths)
