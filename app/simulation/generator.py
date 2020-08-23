@@ -8,12 +8,28 @@ from app.simulation.ball import Ball, TrackedBall
 
 
 class FrameGenerator:
+    """
+    Klasa, która zajmuje się generowaniem inicjalnej klatki,
+    na podstawie konfiguracji symulacji.
+
+    Konfiguracja ta zawiera między innymi informacje na temat
+    ilości kulek, ich rozmiaru, ich minimalnych/maksymalnych prędkości itd.
+    """
+
     def __init__(self, config):
+        """
+        Konstruktor klasy. Jako argument przekazywana jest konfiguracja symulacji.
+        """
+
         self.config = config
         self.scene_rectangle = Rectangle(
             0, 0, self.config['width'], self.config['height'])
 
     def generate(self):
+        """
+        Metoda generująca klatkę i zwracająca ją
+        """
+
         positions = self.__randomize_positions()
 
         balls = []
@@ -41,6 +57,14 @@ class FrameGenerator:
         )
 
     def __randomize_positions(self):
+        """
+        Metoda, która (w nieco chałupniczy sposób) generuje pozycje dla kulek,
+        ale w ten sposób, żeby te się w żaden sposób nie pokrywały.
+
+        Wygenerowane pozycje są zwracane w postaci listy punktów
+        (lista obiektów klasy Point)
+        """
+
         total_balls = self.config['regular_balls_number'] + \
             self.config['tracked_balls_number']
         columns_number = rows_number = math.ceil(math.sqrt(total_balls))
