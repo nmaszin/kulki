@@ -2,6 +2,20 @@
 
 Program symulujący zachowanie się gazu doskonałego w szczelnie zamkniętym zbiorniku. Zawiera on zarówno zwyczajne atomy (koloru czerwonego), jak i szczególne atomy śledzone (koloru niebieskiego), które zostawiają za sobą ślad.
 
+## Instalacja
+Aby móc skorzystać z programu, trzeba najpierw zainstalować wszystkie potrzebne zależności. Aby to zrobić, należy skorzystać z komendy:
+```sh
+$ pip install -r requirements.txt
+```
+
+W przypadku ewentualnych błędów, należy zapoznać się z ich treścią i zainstalować brakujące systemowe pakiety.
+
+Po instalacji, program powinien być dostępny poprzez plik `main.py`, co pokazano na poniższym przykładzie:
+```sh
+./main.py --help
+```
+
+
 ## Informacje wstępne
 
 Główny interfejs programu jest konsolowy. Z jego poziomu możliwe jest uruchomienie komend, które wykonają określone zadania związane z symulacją. Na chwilę obecną wspierane są trzy komendy:
@@ -31,7 +45,7 @@ Po zakończeniu każdej symulacji na standardowe wyjście wypisywane są jej wyn
 
 ### multisimulation
 
-W przypadku komendy simulation podanie pliku konfiguracyjnego było obcjonalne - w tym przypadku jest jednak inaczej. Należy skonfigurować przynajmniej dwie opcje: 
+W przypadku komendy simulation podanie pliku konfiguracyjnego było opcjonalne - w tym przypadku jest jednak inaczej. Należy skonfigurować przynajmniej dwie opcje: 
 
 - `simulation_max_frames` - czas trwania symulacji w klatkach - jest to potrzebne, ponieważ symulacje są uruchamiane w trybie wsadowym i użytkownik nie ma możliwości ich przerwania w trakcie działania; istotne jest również, aby te symulacje trwały tyle samo,
 - `multisimulation_balls_number_sequence` - trzyelementowa lista, która określa ile kulek będzie pojawiało się w kolejnych symulacjach; pierwszy element oznacza wartość początkową, drugi element to krok, natomiast trzeci to całkowita liczba symulacji wykonywana w ramach trybu wsadowego.
