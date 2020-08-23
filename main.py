@@ -13,6 +13,11 @@ signal.signal(signal.SIGINT, signal.default_int_handler)
 
 
 def main():
+    """
+    Główna funkcja programu. Inicjalizuje parser argumentów,
+    oraz system ładujący i wykonujący poszczególne komendy
+    """
+
     parser = argparse.ArgumentParser(description='Kulki by NMaszin')
     commands = climmands.CommandLoader(parser).load_commands()
     executor = climmands.CommandExecutor(commands)

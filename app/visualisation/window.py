@@ -12,6 +12,10 @@ from app.visualisation.frame import DrawableFrame
 
 
 class VisualisationWindow:
+    """
+    Klasa obsługująca okno wizualizacji
+    """
+
     WINDOW_TITLE = 'Kulki by N-Maszin'
     WINDOW_ICON_PATH = 'assets/icon.png'
 
@@ -19,6 +23,10 @@ class VisualisationWindow:
     paused = False
 
     def __init__(self, simulation):
+        """
+        Konstruktor, jako argument przyjmuje obiekt klasy Simulation
+        """
+
         self.simulation = simulation
         self.simulation_saved = False
         self.simulation_backward = False
@@ -27,6 +35,11 @@ class VisualisationWindow:
         self.init_timers()
 
     def init_window(self):
+        """
+        Metoda, która tworzy okno i ustawia jego parametry (tytuł, ikonę
+        ewentualny tryb pełnoekranowy)
+        """
+
         pygame.init()
         pygame.display.set_caption(self.WINDOW_TITLE)
         pygame.display.set_icon(pygame.image.load(self.WINDOW_ICON_PATH))
@@ -44,6 +57,10 @@ class VisualisationWindow:
         pygame.display.update()
 
     def init_timers(self):
+        """
+        Metoda, która inicjuje zegary synchronizujące pracę okna wizualizacji
+        """
+
         self.GENERATE_FRAME_EVENT = pygame.USEREVENT
         pygame.time.set_timer(self.GENERATE_FRAME_EVENT,
                               int(1000 / self.simulation.config['engine_fps']))
@@ -53,6 +70,10 @@ class VisualisationWindow:
             1000 / self.simulation.config['fps']))
 
     def run(self):
+        """
+        Główna metoda okna wizualizacji, która obsługuje wszelkie zdarzenia
+        """
+
         try:
             self.running = True
             while self.running:
@@ -64,6 +85,10 @@ class VisualisationWindow:
         return self.simulation.current_frame()
 
     def handle_event(self, event):
+        """
+        Metoda obsługująca pojedyncze zdarzenie
+        """
+
         if event.type == pygame.QUIT:
             self.running = False
 
