@@ -8,13 +8,28 @@ from app.json_file import JsonFile
 
 
 class PlotCommand(climmands.Command):
+    """
+    Klasa kontrolera komendy plot
+    """
+
     name = 'plot'
     description = 'Plot results'
 
     def initialize_arguments_parser(self, parser):
+        """
+        Metoda, która wskazuje, jakie parametry wywołania można przekazać do komendy
+        Parametry te zostają ustawione w parserze, który jest przekazywany jako jedyny argument
+        """
+
         parser.add_argument('results', help='Path to file with results')
 
     def execute(self, parsed_arguments):
+        """
+        Metoda, która obsługuje to, w jaki sposób wykonuje się komenda
+        W parametrze parsed_arguments znajdują się wszystkie argumenty wywołania
+        przekazane od użytkownika
+        """
+
         results = JsonFile(parsed_arguments.results).read()
 
         transformed_results = {}
@@ -31,6 +46,11 @@ class PlotCommand(climmands.Command):
             self.plot(prop, 'N', prop, data['x'], data['y'])
 
     def plot(self, title, legend_x, legend_y, x_values, y_values):
+        """
+        Metoda, która rysuje wykres o podanych parametrach
+        Wykorzystuje do tego moduł pyplot z biblioteki matplotlib
+        """
+
         pyplot.figure(num=title)
         pyplot.title(title)
         pyplot.xlabel(legend_x)
