@@ -10,9 +10,9 @@ $ pip install -r requirements.txt
 
 W przypadku ewentualnych błędów, należy zapoznać się z ich treścią i zainstalować brakujące systemowe pakiety.
 
-Po instalacji, program powinien być dostępny poprzez plik `main.py`, co pokazano na poniższym przykładzie:
+Po instalacji, program powinien być dostępny poprzez plik `kulki.py`, co pokazano na poniższym przykładzie:
 ```sh
-./main.py --help
+./kulki.py --help
 ```
 
 
