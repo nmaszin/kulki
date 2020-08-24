@@ -267,7 +267,7 @@ class TrackedBall(Ball):
 
         return {
             'collisions_counter': self.collisions_counter,
-            'average_free_path': avg(self.free_paths)
+            'average_free_path': avg(self.free_paths[1:])
         }
 
     def serialize(self):
