@@ -8,11 +8,6 @@ from app.graphics.circle import Circle
 
 
 class Ball:
-    """
-    Mathematical model of ball
-    This class handle move and collisions with wall and other objects
-    """
-
     def __init__(self, position, radius, velocity, acceleration, collisions_precision):
         self.position = position
         self.radius = radius
@@ -26,17 +21,10 @@ class Ball:
         return self.position == other.position and self.velocity == other.velocity and self.radius == other.radius
 
     def is_collision_with_ball(self, ball):
-        """
-        Returns True if collision between two balls has ocurred
-        """
         distance = self.position.distance(ball.position)
         return distance <= self.radius + ball.radius + self.collisions_precision
 
     def is_collision_with_wall(self, scene_rectangle):
-        """
-        Returns True if collision between ball and wall has ocurred
-        Wall is a border of scene rectangle
-        """
         return not self.ball_possible_centers(scene_rectangle).contains(self.position)
 
     def register_ball_collided(self, ballIndex):
@@ -49,11 +37,6 @@ class Ball:
         return ballIndex in self.balls_collided_at_last_frame
 
     def bounce_off_of_ball(self, ball):
-        """
-        Handle ball bouncing off of another ball
-        Does not return anything
-        """
-
         vector_between_centers = Vector(
             ball.position.x - self.position.x,
             ball.position.y - self.position.y
@@ -76,10 +59,6 @@ class Ball:
         ball.velocity = matrix.from_base(ball_velocity_transformed)
 
     def bounce_off_of_wall(self, scene_rectangle):
-        """
-        Handle ball bouncing off of walls
-        Does not return anything
-        """
         possible_centers = self.ball_possible_centers(scene_rectangle)
 
         if self.position.x < possible_centers.left() and self.velocity.x < 0:
@@ -93,11 +72,6 @@ class Ball:
             self.velocity.y *= -1
 
     def ball_possible_centers(self, scene_rectangle):
-        """
-        Returns a rectangle that describes area
-        consisting of all possible points (centers of ball)
-        which ball is able to have
-        """
         return Rectangle(
             x=scene_rectangle.x + self.radius + self.collisions_precision,
             y=scene_rectangle.y + self.radius + self.collisions_precision,
@@ -106,10 +80,6 @@ class Ball:
         )
 
     def update(self, time_delta):
-        """
-        Updates position of the ball after time_delta seconds
-        Does not return anything
-        """
         velocity_displacement = self.acceleration * time_delta
         self.velocity += velocity_displacement
 

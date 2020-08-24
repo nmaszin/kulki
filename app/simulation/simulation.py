@@ -15,10 +15,6 @@ from app.graphics.color import Color
 
 
 class Simulation:
-    """
-    This class is a main simulation manager
-    """
-
     def __init__(self, config, initial_frame):
         self.scene_rectangle = Rectangle(
             0, 0, config['width'], config['height'])

@@ -17,9 +17,6 @@ class Rectangle:
         )
 
     def contains(self, point):
-        """
-        Returns True if rectangle contains point
-        """
         return self.x <= point.x <= self.width and self.y <= point.y <= self.height
 
     def left(self):

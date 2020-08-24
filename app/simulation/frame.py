@@ -10,10 +10,6 @@ class SimulationFrame:
         self.balls = balls
 
     def after(self, delta_time):
-        """
-        This method is responsible for generating the next frame
-        that will occur after some delta_time
-        """
         balls = copy.deepcopy(self.balls)
 
         for ballIndex, ball in enumerate(balls):
