@@ -85,6 +85,8 @@ class VisualisationWindow:
         elif event.type == self.RENDER_FRAME_EVENT and not self.paused:
             def obtain_and_render_frame(obtainer):
                 self.surface.fill(Color.BACKGROUND)
+                self.draw_watermark()
+
                 frame = obtainer()
                 DrawableFrame(frame, self.simulation.config).draw(self.surface)
                 pygame.display.update()
@@ -100,3 +102,12 @@ class VisualisationWindow:
         elif event.type == self.GENERATE_FRAME_EVENT and not self.simulation_backward and not self.simulation.should_end():
             threading.Thread(
                 target=self.simulation.generate_next_frame).start()
+
+    def draw_watermark(self):
+        image = pygame.image.load('assets/watermark.png')
+        coordinates = (
+            (self.simulation.config['width'] - image.get_width()) / 2,
+            (self.simulation.config['height'] - image.get_height()) / 2
+        )
+
+        self.surface.blit(image, coordinates)
