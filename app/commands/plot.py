@@ -11,6 +11,11 @@ class PlotCommand(climmands.Command):
     name = 'plot'
     description = 'Plot results'
 
+    results_names = {
+        'collisions_counter': 'Liczba kolizji',
+        'average_free_path': 'Średnia droga swobodna',
+    }
+
     def initialize_arguments_parser(self, parser):
         parser.add_argument('results', help='Path to file with results')
 
@@ -28,7 +33,8 @@ class PlotCommand(climmands.Command):
                 transformed_results[prop]['y'].append(y_value)
 
         for prop, data in transformed_results.items():
-            self.plot(prop, 'N', prop, data['x'], data['y'])
+            name = self.results_names.get(prop, prop)
+            self.plot(name, 'N', name, data['x'], data['y'])
 
     def plot(self, title, legend_x, legend_y, x_values, y_values):
         pyplot.figure(num=title)
