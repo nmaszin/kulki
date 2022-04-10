@@ -1,5 +1,7 @@
 # Kulki
 
+![](./doc/screen.png)
+
 Program symulujący zachowanie się gazu doskonałego w szczelnie zamkniętym zbiorniku. Zawiera on zarówno zwyczajne atomy (koloru czerwonego), jak i szczególne atomy śledzone (koloru niebieskiego), które zostawiają za sobą ślad.
 
 ## Instalacja
